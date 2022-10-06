@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  alpine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: symfony_docker
+    restart: on-failure
+    ports:
+      - "1234:80"
+    volumes:
+      - ./conf/site.conf:/etc/nginx/http.d/default.conf
+      - ./src:/var/www/html
+    networks:
+      - acpSymfony
+
+  db:
+    image: mariadb:10.8.2
+    container_name: mariadb_docker
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'ChangeMeLater'
+    networks:
+      - acpSymfony
+
+  maildev:
+    image: maildev/maildev
+    container_name: maildev_docker
+    command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+    ports:
+      - "8081:80"
+    restart: always
+    networks:
+      - acpSymfony
+
+volumes:
+  db-data:
+
+networks:
+  acpSymfony:
