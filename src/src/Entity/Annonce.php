@@ -34,9 +34,6 @@ class Annonce
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photos = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private array $tags = [];
-
     #[ORM\OneToMany(mappedBy: 'id_annonce', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
@@ -118,18 +115,6 @@ class Annonce
     public function setPhotos(?string $photos): self
     {
         $this->photos = $photos;
-
-        return $this;
-    }
-
-    public function getTags(): array
-    {
-        return $this->tags;
-    }
-
-    public function setTags(?array $tags): self
-    {
-        $this->tags = $tags;
 
         return $this;
     }
