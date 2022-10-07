@@ -16,8 +16,9 @@ class Annonce
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $id_seller = null;
+    #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $id_user = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -50,14 +51,14 @@ class Annonce
         return $this->id;
     }
 
-    public function getIdSeller(): ?int
+    public function getIdUser(): ?User
     {
-        return $this->id_seller;
+        return $this->id_user;
     }
 
-    public function setIdSeller(int $id_seller): self
+    public function setIdUser(?User $id_user): self
     {
-        $this->id_seller = $id_seller;
+        $this->id_user = $id_user;
 
         return $this;
     }
