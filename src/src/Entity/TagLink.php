@@ -19,6 +19,10 @@ class TagLink
     #[ORM\Column]
     private ?int $id_annonce = null;
 
+    #[ORM\OneToOne(inversedBy: 'TagToTagLink', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tag $TagLinkToTag = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class TagLink
     public function setIdAnnonce(int $id_annonce): self
     {
         $this->id_annonce = $id_annonce;
+
+        return $this;
+    }
+
+    public function getTagLinkToTag(): ?Tag
+    {
+        return $this->TagLinkToTag;
+    }
+
+    public function setTagLinkToTag(Tag $TagLinkToTag): self
+    {
+        $this->TagLinkToTag = $TagLinkToTag;
 
         return $this;
     }
