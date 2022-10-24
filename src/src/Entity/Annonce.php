@@ -41,9 +41,13 @@ class Annonce
     #[ORM\OneToMany(mappedBy: 'id_annonce', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\ManyToMany(targetEntity: TagLink::class, mappedBy: 'id_annonce')]
+    private Collection $tagLinks;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->tagLinks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +164,33 @@ class Annonce
             if ($comment->getIdAnnonce() === $this) {
                 $comment->setIdAnnonce(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TagLink>
+     */
+    public function getTagLinks(): Collection
+    {
+        return $this->tagLinks;
+    }
+
+    public function addTagLink(TagLink $tagLink): self
+    {
+        if (!$this->tagLinks->contains($tagLink)) {
+            $this->tagLinks->add($tagLink);
+            $tagLink->addIdAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTagLink(TagLink $tagLink): self
+    {
+        if ($this->tagLinks->removeElement($tagLink)) {
+            $tagLink->removeIdAnnonce($this);
         }
 
         return $this;
