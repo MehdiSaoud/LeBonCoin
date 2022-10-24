@@ -35,19 +35,15 @@ class Annonce
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photos = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private array $tags = [];
-
     #[ORM\OneToMany(mappedBy: 'id_annonce', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\ManyToMany(targetEntity: TagLink::class, mappedBy: 'id_annonce')]
-    private Collection $tagLinks;
+    #[ORM\Column(length: 255)]
+    private ?string $Tags = null;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->tagLinks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,18 +123,6 @@ class Annonce
         return $this;
     }
 
-    public function getTags(): array
-    {
-        return $this->tags;
-    }
-
-    public function setTags(?array $tags): self
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Comment>
      */
@@ -169,29 +153,14 @@ class Annonce
         return $this;
     }
 
-    /**
-     * @return Collection<int, TagLink>
-     */
-    public function getTagLinks(): Collection
+    public function getTags(): ?string
     {
-        return $this->tagLinks;
+        return $this->Tags;
     }
 
-    public function addTagLink(TagLink $tagLink): self
+    public function setTags(string $Tags): self
     {
-        if (!$this->tagLinks->contains($tagLink)) {
-            $this->tagLinks->add($tagLink);
-            $tagLink->addIdAnnonce($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTagLink(TagLink $tagLink): self
-    {
-        if ($this->tagLinks->removeElement($tagLink)) {
-            $tagLink->removeIdAnnonce($this);
-        }
+        $this->Tags = $Tags;
 
         return $this;
     }

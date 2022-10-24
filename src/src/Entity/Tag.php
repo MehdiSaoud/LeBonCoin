@@ -14,41 +14,21 @@ class Tag
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
-    #[ORM\OneToOne(mappedBy: 'TagLinkToTag', cascade: ['persist', 'remove'])]
-    private ?TagLink $TagToTagLink = null;
+    private ?string $tag = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTag(): ?string
     {
-        return $this->name;
+        return $this->tag;
     }
 
-    public function setName(string $name): self
+    public function setTag(string $tag): self
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getTagToTagLink(): ?TagLink
-    {
-        return $this->TagToTagLink;
-    }
-
-    public function setTagToTagLink(TagLink $TagToTagLink): self
-    {
-        // set the owning side of the relation if necessary
-        if ($TagToTagLink->getTagLinkToTag() !== $this) {
-            $TagToTagLink->setTagLinkToTag($this);
-        }
-
-        $this->TagToTagLink = $TagToTagLink;
+        $this->tag = $tag;
 
         return $this;
     }
