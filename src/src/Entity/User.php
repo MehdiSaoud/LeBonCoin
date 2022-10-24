@@ -51,11 +51,14 @@ class User
 
     #[ORM\OneToMany(mappedBy: 'id_user', targetEntity: Vote::class, orphanRemoval: true)]
     private Collection $votes;
+    #[ORM\OneToMany(mappedBy: 'id_user', targetEntity: Annonce::class, orphanRemoval: true)]
+    private Collection $annonces;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->votes = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -237,6 +240,35 @@ class User
             // set the owning side to null (unless already changed)
             if ($vote->getIdUser() === $this) {
                 $vote->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }
+      /**
+     * @return Collection<int, Annonce>
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): self
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces->add($annonce);
+            $annonce->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): self
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getIdUser() === $this) {
+                $annonce->setIdUser(null);
             }
         }
 

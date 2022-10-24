@@ -11,7 +11,7 @@ class Tag
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id_tag = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -19,9 +19,9 @@ class Tag
     #[ORM\OneToOne(mappedBy: 'TagLinkToTag', cascade: ['persist', 'remove'])]
     private ?TagLink $TagToTagLink = null;
 
-    public function getIdTag(): ?int
+    public function getId(): ?int
     {
-        return $this->id_tag;
+        return $this->id;
     }
 
     public function getName(): ?string
