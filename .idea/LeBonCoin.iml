@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/fakerphp/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/property-info" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/property-access" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/zenstruck/foundry" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/zenstruck/callback" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/zenstruck/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/doctrine/data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/password-hasher" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-csrf" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-core" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-http" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

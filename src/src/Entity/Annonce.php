@@ -38,6 +38,9 @@ class Annonce
     #[ORM\OneToMany(mappedBy: 'id_annonce', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Tags = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -146,6 +149,18 @@ class Annonce
                 $comment->setIdAnnonce(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTags(): ?string
+    {
+        return $this->Tags;
+    }
+
+    public function setTags(string $Tags): self
+    {
+        $this->Tags = $Tags;
 
         return $this;
     }

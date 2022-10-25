@@ -11,7 +11,7 @@ class Vote
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id_vote = null;
+    private ?int $id = null;
 
    
 
@@ -27,16 +27,9 @@ class Vote
     private ?User $id_seller = null;
 
 
-    public function getIdVote(): ?int
+    public function getId(): ?int
     {
-        return $this->id_vote;
-    }
-
-    public function setIdVote(int $id_vote): self
-    {
-        $this->id_vote = $id_vote;
-
-        return $this;
+        return $this->id;
     }
 
     public function getVote(): ?int
