@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ annonce.title}}{% endblock %}
+
+{% block body %}
+    <style>
+        #annonce_section{
+            display: flex;
+        }
+        #annonce_section ul{
+            list-style-type: none;
+        }
+        #annonce_section .annonce_subtitle{
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+    <div id="annonce_section">
+        <img src="{{ annonce.photos }}" alt="{{ annonce.title }}">
+        <ul>
+            <li>
+                <p class="annonce_subtitle">Titre :</p>
+                <p>{{ annonce.title }}</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Date de création :</p>
+                <p>{{ annonce.dateCreation|date("F jS \\a\\t g:ia") }}</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Description :</p>
+                <p>{{ annonce.description }}</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Prix :</p>
+                <p>{{ annonce.price }} €</p>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
