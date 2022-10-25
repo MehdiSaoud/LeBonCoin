@@ -46,7 +46,6 @@ final class UserFactory extends ModelFactory
             'email' => self::faker()->email(),
             'password' => self::faker()->word(),
             'profilePicture' => self::faker()->word(),
-            'role' => 'ROLE_USER',
             'accountCreationDate' => self::faker()->dateTime(),
         ];
     }
