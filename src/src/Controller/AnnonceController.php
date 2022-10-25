@@ -15,8 +15,9 @@ class AnnonceController extends AbstractController
     {
 
         $annonce = $annonceRepository->findOneBy(["id" => $id]);
+        $comments = $commentRepository->getComments($id);
 
-        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce]);
+        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce, 'comments' => $comments]);
     }
 
 }

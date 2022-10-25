@@ -15,6 +15,7 @@
             font-weight: bold;
         }
     </style>
+    <h1>{{ annonce.title }}</h1>
     <div id="annonce_section">
         <img src="{{ annonce.photos }}" alt="{{ annonce.title }}">
         <ul>
@@ -34,6 +35,14 @@
                 <p class="annonce_subtitle">Prix :</p>
                 <p>{{ annonce.price }} €</p>
             </li>
+        </ul>
+    </div>
+    <div id="comments_section">
+        <h2>Commentaires :</h2>
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment.question }}</li>
+            {% endfor %}
         </ul>
     </div>
 {% endblock %}
