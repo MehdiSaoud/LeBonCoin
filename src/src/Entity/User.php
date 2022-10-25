@@ -31,9 +31,6 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column]
-    private ?bool $isAdmin = null;
-
     #[ORM\Column(length: 255)]
     private ?string $profilePicture = null;
 
@@ -53,6 +50,9 @@ class User
     private Collection $votes;
     #[ORM\OneToMany(mappedBy: 'id_user', targetEntity: Annonce::class, orphanRemoval: true)]
     private Collection $annonces;
+
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
 
     public function __construct()
     {
@@ -122,18 +122,6 @@ class User
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function isIsAdmin(): ?bool
-    {
-        return $this->isAdmin;
-    }
-
-    public function setIsAdmin(bool $isAdmin): self
-    {
-        $this->isAdmin = $isAdmin;
 
         return $this;
     }
@@ -271,6 +259,18 @@ class User
                 $annonce->setIdUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
