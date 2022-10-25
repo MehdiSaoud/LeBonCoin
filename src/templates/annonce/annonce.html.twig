@@ -14,6 +14,9 @@
             font-size: 15px;
             font-weight: bold;
         }
+        .user_comment{
+            font-weight: bold;
+        }
     </style>
     <h1>{{ annonce.title }}</h1>
     <div id="annonce_section">
@@ -35,13 +38,21 @@
                 <p class="annonce_subtitle">Prix :</p>
                 <p>{{ annonce.price }} €</p>
             </li>
+            <li>
+                <p class="annonce_subtitle">Vendeur :</p>
+                <p>{{ seller[0].pseudo }}</p>
+                <p>{{ seller[0].email }}</p>
+            </li>
         </ul>
     </div>
     <div id="comments_section">
         <h2>Commentaires :</h2>
         <ul>
             {% for comment in comments %}
-                <li>{{ comment.question }}</li>
+                <li>
+                    <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+                    <p>{{ comment.question }}</p>
+                </li>
             {% endfor %}
         </ul>
     </div>
