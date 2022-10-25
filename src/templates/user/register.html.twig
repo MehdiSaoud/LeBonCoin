@@ -1,20 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Page Register{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <h1>S'inscrire</h1>
+    {{ form_start(register_form) }}
+        {{ form_row(register_form.lastname) }}
+        {{ form_row(register_form.firstname) }}
+        {{ form_row(register_form.pseudo) }}
+        {{ form_row(register_form.email) }}
+        {{ form_row(register_form.password.first) }}
+        {{ form_row(register_form.password.second) }}
+        {{ form_errors(register_form.password) }}
+        {{ form_row(register_form.Submit) }}
+    {{ form_end(register_form) }}
 {% endblock %}

@@ -15,6 +15,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-csrf" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-core" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-http" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/validator" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

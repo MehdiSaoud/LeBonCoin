@@ -25,6 +25,8 @@ services:
       MYSQL_ROOT_PASSWORD: 'ChangeMeLater'
     networks:
       - acpSymfony
+    ports:
+      - "8000:80"
 
   maildev:
     image: maildev/maildev
