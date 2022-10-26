@@ -4,7 +4,7 @@
 
 {% block body %}
 
-{% if "ROLE_ADMIN" not in profile.roles %}
+{% if "ROLE_ADMIN" in profile.roles %}
 {% set color = "primary" %}
 {% else %}
 {% set color = "secondary" %}
@@ -53,6 +53,5 @@
 
 {% block listeArticles %}
 
-<!--{{ render(controller(App\\Entity\\Profile::showBySeller()))}}-->
 
 {% endblock %}
