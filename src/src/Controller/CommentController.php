@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Repository\AnnonceRepository;
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,20 @@ class CommentController extends AbstractController
             ->setCreationDate(new \DateTimeImmutable());
 
         $entityManager->persist($newComment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_annonce_by_id', array("id" => $id));
+    }
+
+    #[Route('/annonce/{id}/response', name: 'app_response_add', methods: ["POST"])]
+    public function addResponse($id, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
+    {
+        $comment_id = $request->request->get("comment_id");
+        $comment = $commentRepository->findOneBy(["id" => $comment_id]);
+        $comment->setResponse($request->request->get("response"))
+            ->setResponseDate(new \DateTimeImmutable());
+
+        $entityManager->persist($comment);
         $entityManager->flush();
 
         return $this->redirectToRoute('app_annonce_by_id', array("id" => $id));

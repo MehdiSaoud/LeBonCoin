@@ -18,6 +18,7 @@ class AnnonceController extends AbstractController
 
         return $this->render('home/home.html.twig', ['annonce' => $annonce]);
     }
+
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository)
     {
