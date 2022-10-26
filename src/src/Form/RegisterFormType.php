@@ -29,12 +29,9 @@ class RegisterFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Mail'
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mdp doivent être identiques',
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer mot de passe']
-
+            ->add('password', PasswordType::class)
+            ->add('password_confirm', PasswordType::class, [
+                'mapped' => false
             ])
             ->add('Submit', SubmitType::class);
     }

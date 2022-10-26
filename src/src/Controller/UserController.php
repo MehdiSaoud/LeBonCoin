@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterFormType;
+use App\Repository\UserRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,33 +25,62 @@ class UserController extends AbstractController
     }
 
 
+    /**
+     * @throws Exception
+     */
     #[Route('/inscription', name: 'app_user')]
-    public function register(Request $request, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $managerRegistry, UserRepository $repository): Response
     {
+        $data['error']['pseudo'] = '';
+        $data['error']['email'] = '';
+        $data['error']['pass'] = '';
         $user = new User();
-
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
 
-        //$data = $form->getData();
-        //print_r($data);
+        $pseudo = $form['pseudo']->getData();
+        $count_this_pseudo = $repository->countByPseudo($pseudo);
 
-        //$pass_hashed = password_hash($user->getPassword(),1);
+        if ($count_this_pseudo == 0) {
+            $email = $form['email']->getData();
+            $count_this_mail = $repository->countByEmail($email);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setAccountCreationDate(new \DateTime());
-            $user->setRole('ROLE_USER');
-            $entityManager->persist($user);
-            $entityManager->flush();
+            if ($count_this_mail == 0) {
 
-            return $this->render('user/ok.html.twig', [
-                'lastname' => $user->getLastname(),
-                'firstname' => $user->getFirstname()
-            ]);
+                $password = $form['password']->getData();
+                if ($password === $form['password_confirm']->getData()) {
+                    $pass_hashed = password_hash($password, 1);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        $user->setAccountCreationDate(new \DateTime());
+                        $user->setRole('ROLE_USER');
+                        $user->setPassword($pass_hashed);
+                        $entityManager->persist($user);
+                        $entityManager->flush();
+
+                        $lastname = $user->getLastname();
+                        $firstname = $user->getFirstname();
+                        $data = [$lastname, $firstname];
+
+
+                        return $this->render('user/ok.html.twig', [
+                            'data' => $data
+                        ]);
+                    }
+                } else {
+                    $data['error']['pass'] = 'Les mots de passe ne correspondent pas';
+                }
+            } else {
+                $data['error']['email'] = 'Cette adresse mail existe déjà';
+            }
+        } else {
+            $data['error']['pseudo'] = 'Ce pseudo existe déjà';
         }
 
         return $this->render('user/register.html.twig', [
-            'register_form' => $form->createView()
+            'register_form' => $form->createView(),
+            'data' => $data,
         ]);
+        
     }
 }

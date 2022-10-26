@@ -5,13 +5,15 @@
 {% block body %}
     <h1>S'inscrire</h1>
     {{ form_start(register_form) }}
-        {{ form_row(register_form.lastname) }}
-        {{ form_row(register_form.firstname) }}
-        {{ form_row(register_form.pseudo) }}
-        {{ form_row(register_form.email) }}
-        {{ form_row(register_form.password.first) }}
-        {{ form_row(register_form.password.second) }}
-        {{ form_errors(register_form.password) }}
-        {{ form_row(register_form.Submit) }}
+    {{ form_row(register_form.lastname) }}
+    {{ form_row(register_form.firstname) }}
+    {{ data.error.pseudo }}
+    {{ form_row(register_form.pseudo) }}
+    {{ data.error.email }}
+    {{ form_row(register_form.email) }}
+    {{ form_row(register_form.password) }}
+    {{ form_row(register_form.password_confirm) }}
+    {{ data.error.pass }}
+    {{ form_row(register_form.Submit) }}
     {{ form_end(register_form) }}
 {% endblock %}

@@ -4,6 +4,9 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +40,34 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function countByPseudo(string $pseudo)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('count(t.id)');
+        $qb->where('t.pseudo = :pseudo');
+        $qb->setParameter('pseudo', $pseudo);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function countByEmail(string $email)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('count(t.id)');
+        $qb->where('t.email = :email');
+        $qb->setParameter('email', $email);
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
 //    /**
