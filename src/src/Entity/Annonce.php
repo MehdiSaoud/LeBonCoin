@@ -39,7 +39,7 @@ class Annonce
     private Collection $comments;
 
     #[ORM\Column(length: 255)]
-    private ?string $Tags = null;
+    private ?array $tags = [];
 
     public function __construct()
     {
@@ -153,14 +153,14 @@ class Annonce
         return $this;
     }
 
-    public function getTags(): ?string
+    public function getTags(): ?array
     {
-        return $this->Tags;
+        return $this->tags;
     }
 
-    public function setTags(string $Tags): self
+    public function setTags(array $tags): self
     {
-        $this->Tags = $Tags;
+        $this->tags = $tags;
 
         return $this;
     }
