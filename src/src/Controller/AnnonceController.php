@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Doctrine\Common\Collections\Collection;
 use App\Entity\Comment;
 use App\Repository\AnnonceRepository;
 use App\Repository\CommentRepository;
@@ -16,8 +17,15 @@ class AnnonceController extends AbstractController
 
         $annonce = $annonceRepository->findAll();
 
-        return $this->render('home/home.html.twig', ['annonce' => $annonce]);
+        return $this->render('home/home.html.twig', ['annonce' => $annonce, 'home' => True]);
     }
+
+    public function getUserAnnonces(Collection $UserAnnonce) 
+    {
+        return $this->render('home/home.html.twig', ['annonce' => $UserAnnonce, 'home' => False]);
+    }
+
+
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository)
     {

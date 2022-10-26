@@ -45,11 +45,12 @@
     </div>
   </div>
   <div class="row">
-    <h1>Last comment<h1>
+    <h1>Annonces<h1>
+    {{ render(controller('App\\Controller\\AnnonceController::getUserAnnonces',
+        {"UserAnnonce":profile.annonces}))}}
   </div>
 </div>
 {% endblock %}
-
 {% block listeArticles %}
 
 
