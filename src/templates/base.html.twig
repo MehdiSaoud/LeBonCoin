@@ -22,7 +22,7 @@
             <nav class="d-flex gap-4">
                 <a href="{{ path('app_annonce_list') }}">Home</a>
                 {% if app.user %}
-                    <a href="/">Profile </a>
+                    <a href="{{ path('app_profile',{pseudo: app.user.pseudo}) }}">Profile </a>
                     <a href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
                     <a href="{{ path('app_login') }}">Login</a>
