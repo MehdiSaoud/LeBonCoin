@@ -15,7 +15,8 @@
             </div>
             {% for single in annonce %}        
             <div class="row">
-                <div class="col-sm-6 col-md-4 "><a  href="" >
+                <div class="col-sm-6 col-md-4 ">
+                    <a  href="/annonce/{{single.id}}" >
                         <img class="img-fluid" src="{{single.photos}}">
                     </a>
                     <div class="portfolio-caption">
