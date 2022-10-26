@@ -21,7 +21,7 @@
             <nav class="d-flex gap-4">
                 <a href="/">Home</a>
                 {% if app.user %}
-                    <a href="/">Profile</a>
+                    <a href="/">Profile </a>
                     <a href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
                     <a href="{{ path('app_login') }}">Login</a>
@@ -29,5 +29,14 @@
             </nav>
         </header>
         {% block body %}{% endblock %}
+        <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"><span class="copyright">Copyright&nbsp;© LeBonCoin-2.0 2022</span></div>
+                
+            </div>
+        </div>
+    </footer>
     </body>
+    
 </html>

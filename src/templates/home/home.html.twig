@@ -4,37 +4,34 @@
 
 {% block body %}
 
-  <style>
-  .annonce_picture{
-    display:flex;    
-}
-   .annonce_picture img{
-    width:100%;
-    max-width:320px;
-    border-radius:9px;
-}
-
-  .annonce_card{
-            margin:14px;
-            border: 3px solid;
-            border-radius:10px;
-}
-   .annonce_card li {
-            list-style-type: none;
-}
-  </style>
-        {% for single in annonce %}
-        <div class="annonce_card">
-            <li>
-                <div class="annonce_picture">
-                    <img  src="{{single.photos}}" >
-                    <h1>{{(single.title)}}</h1>
-                    <ul >
-                        <p> A partir de :{{(single.price)}} $ </p>
-                        <p>Créée le  : {{(single.dateCreation|date("d/m/Y"))}}</p>
-                    </ul>     
-                </div>    
-            </li>
+ <div id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="54">
+    <section class="bg-light" id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="text-uppercase section-heading">Bienvenue</h2>
+                    <h3 class="text-muted section-subheading">Vous rechercher quelque chose ?</h3>
+                </div>
+            </div>
+            {% for single in annonce %}        
+            <div class="row">
+                <div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" href="" data-bs-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
+                        </div><img class="img-fluid" src="{{single.photos}}">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>{{(single.title)}}</h4>
+                        <p class="text-muted"> A partir de :{{(single.price)}} $</p>
+                        <p class="text-muted">Créée le  : {{(single.dateCreation|date("d/m/Y"))}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}   
+    </section>
+</div>
+
+  
+           
 {% endblock %}
