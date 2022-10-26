@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une annonce{% endblock %}
+
+{% block body %}
+    <h1>Créer une annonce</h1>
+    {{ form_start(register_form) }}
+    {{ form_row(register_form.description) }}
+    {{ form_end(register_form) }}
+{% endblock %}

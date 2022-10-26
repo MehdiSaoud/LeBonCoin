@@ -25,9 +25,6 @@ class UserController extends AbstractController
     }
 
 
-    /**
-     * @throws Exception
-     */
     #[Route('/inscription', name: 'app_user')]
     public function register(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $managerRegistry, UserRepository $repository): Response
     {
@@ -63,7 +60,6 @@ class UserController extends AbstractController
                         $firstname = $user->getFirstname();
                         $data = [$lastname, $firstname];
 
-
                         return $this->render('user/ok.html.twig', [
                             'data' => $data
                         ]);
@@ -82,6 +78,5 @@ class UserController extends AbstractController
             'register_form' => $form->createView(),
             'data' => $data,
         ]);
-
     }
 }

@@ -164,8 +164,4 @@ class Annonce
 
         return $this;
     }
-
-
-    
-   
 }
