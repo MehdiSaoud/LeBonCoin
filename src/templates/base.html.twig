@@ -16,6 +16,18 @@
         {% endblock %}
     </head>
     <body class="container">
+        <header class="d-flex justify-content-between my-4">
+            <h3>LeBonCoin-2.0</h3>
+            <nav class="d-flex gap-4">
+                <a href="/">Home</a>
+                {% if app.user %}
+                    <a href="/">Profile</a>
+                    <a href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Login</a>
+                {% endif %}
+            </nav>
+        </header>
         {% block body %}{% endblock %}
     </body>
 </html>

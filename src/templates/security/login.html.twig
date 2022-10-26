@@ -3,11 +3,13 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+<!--
 {% if app.user %}
     <div class="m-auto mb-3 text-end">
         You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
     </div>
 {% endif %}
+-->
 <div class="d-flex justify-content-center">
     <form class="w-50 d-flex flex-column" method="post">
         {% if error %}
