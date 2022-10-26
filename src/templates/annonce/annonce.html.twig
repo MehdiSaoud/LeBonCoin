@@ -55,5 +55,14 @@
                 </li>
             {% endfor %}
         </ul>
+
+        <form class="w-50 d-flex flex-column" action="{{ path( "app_comment_add", {'id': id}) }}" method="post">
+            <label for="question">Commentaire</label>
+            <textarea id="question" name="question" rows="3"></textarea>
+            <button class="btn btn-lg btn-primary m-auto mb-4" type="submit">
+                Commenter
+            </button>
+        </form>
+
     </div>
 {% endblock %}
