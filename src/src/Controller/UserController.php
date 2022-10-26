@@ -53,8 +53,9 @@ class UserController extends AbstractController
                         $pass_hashed = password_hash($password, 1);
 
                         $user->setAccountCreationDate(new \DateTime());
-                        $user->setRole('ROLE_USER');
+                        $user->setRoles((array)'ROLE_USER');
                         $user->setPassword($pass_hashed);
+                        $user->setProfilePicture('oui');
                         $entityManager->persist($user);
                         $entityManager->flush();
 
