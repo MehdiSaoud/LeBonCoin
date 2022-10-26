@@ -45,7 +45,8 @@ final class AnnonceFactory extends ModelFactory
             'price' => self::faker()->randomFloat(),
             'dateCreation' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'id_user' => UserFactory::random(),
-            'tags' => '1'
+            'tags' => '1',
+            'photos' => self::faker()->imageUrl(),
         ];
     }
 

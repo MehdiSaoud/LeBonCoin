@@ -39,6 +39,17 @@ class AnnonceRepository extends ServiceEntityRepository
         }
     }
 
+    public function getSeller(int $id): array
+    {
+        return $this->createQueryBuilder('annonce')
+            ->innerJoin('annonce.id_user', 'user')
+            ->addSelect('user.pseudo', 'user.email')
+            ->andWhere('annonce.id LIKE :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Annonce[] Returns an array of Annonce objects
 //     */
