@@ -4,18 +4,18 @@
 
 {% block body %}
 
-{% if "ROLE_ADMIN" in profile.roles %}
+{% if "ROLE_ADMIN" not in profile.roles %}
 {% set color = "primary" %}
 {% else %}
 {% set color = "secondary" %}
 {% endif %}
 
 
-<h1><a class={{"text-" ~ color}}> {{profile.pseudo}}</a> profile<h1>
+<h1><a class='{{"text-" ~ color}}'> {{profile.pseudo}}</a> profile<h1>
 <div class="container">
   <div class="row">
     <!-- différent bordure dépendant rôle user/admin -->
-    <div class={{"col-4 border border-3 border-" ~ color}}>
+    <div class='col-4 border border-3 border-{{ color }}'>
     <!-- -->
       <img src="https://picsum.photos/300/300" alt={{profile.profilePicture}} width="300" height="300">
     </div>
@@ -51,3 +51,8 @@
 </div>
 {% endblock %}
 
+{% block listeArticles %}
+
+<!--{{ render(controller(App\\Entity\\Profile::showBySeller()))}}-->
+
+{% endblock %}
