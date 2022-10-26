@@ -3,20 +3,20 @@
 namespace App\Controller;
 
 use App\Repository\AnnonceRepository;
-use App\Repository\CommentRepository;
+use Doctrine\ORM\Query\AST\Functions\LengthFunction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AnnonceController extends AbstractController
 {
-    #[Route('/annonce/{id}', name: "app_annonce_by_id")]
-    public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository)
+    #[Route('/home', name: "app_annonce_by_id")]
+    public function getAnnonceById(AnnonceRepository $annonceRepository) 
     {
 
-        $annonce = $annonceRepository->findOneBy(["id" => $id]);
+        $annonce = $annonceRepository->findAll();
+        $length = count($annonce);
 
-        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce]);
+        return $this->render('home/home.html.twig', ['annonce' => $annonce,'length' => $length]);
     }
 
 }
