@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ annonce.title}}{% endblock %}
+
+{% block body %}
+    <style>
+        #annonce_section{
+            display: flex;
+        }
+        #annonce_section ul{
+            list-style-type: none;
+        }
+        #annonce_section .annonce_subtitle{
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .user_comment{
+            font-weight: bold;
+        }
+    </style>
+    <h1>{{ annonce.title }}</h1>
+    <div id="annonce_section">
+        <img src="{{ annonce.photos }}" alt="{{ annonce.title }}">
+        <ul>
+            <li>
+                <p class="annonce_subtitle">Titre :</p>
+                <p>{{ annonce.title }}</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Date de création :</p>
+                <p>{{ annonce.dateCreation|date("F jS \\a\\t g:ia") }}</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Description :</p>
+                <p>{{ annonce.description }}</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Prix :</p>
+                <p>{{ annonce.price }} €</p>
+            </li>
+            <li>
+                <p class="annonce_subtitle">Vendeur :</p>
+                <p>{{ seller[0].pseudo }}</p>
+                <p>{{ seller[0].email }}</p>
+            </li>
+        </ul>
+    </div>
+    <div id="comments_section">
+        <h2>Commentaires :</h2>
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+                    <p>{{ comment.question }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
