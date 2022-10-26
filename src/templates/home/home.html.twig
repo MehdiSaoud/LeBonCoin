@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}titre{% endblock %}
+
+{% block body %}
+
+  <style>
+  .annonce_picture{
+    display:flex;    
+}
+   .annonce_picture img{
+    width:100%;
+    max-width:320px;
+    border-radius:9px;
+}
+
+  .annonce_card{
+            margin:14px;
+            border: 3px solid;
+            border-radius:10px;
+}
+   .annonce_card li {
+            list-style-type: none;
+}
+  </style>
+        {% for single in annonce %}
+        <div class="annonce_card">
+            <li>
+                <div class="annonce_picture">
+                    <img  src="{{single.photos}}" >
+                    <h1>{{(single.title)}}</h1>
+                    <ul >
+                        <p> A partir de :{{(single.price)}} $ </p>
+                        <p>Créée le  : {{(single.dateCreation|date("d/m/Y"))}}</p>
+                    </ul>     
+                </div>    
+            </li>
+        </div>
+        {% endfor %}   
+{% endblock %}
