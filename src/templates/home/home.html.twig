@@ -4,8 +4,8 @@
 
 {% block body %}
 
- <div id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="54">
-    <section class="bg-light" id="portfolio">
+ <div id="page-top">
+    <section>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -15,10 +15,8 @@
             </div>
             {% for single in annonce %}        
             <div class="row">
-                <div class="col-sm-6 col-md-4 portfolio-item"><a class="portfolio-link" href="" data-bs-toggle="modal">
-                        <div class="portfolio-hover">
-                            <div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="{{single.photos}}">
+                <div class="col-sm-6 col-md-4 "><a  href="" >
+                        <img class="img-fluid" src="{{single.photos}}">
                     </a>
                     <div class="portfolio-caption">
                         <h4>{{(single.title)}}</h4>
