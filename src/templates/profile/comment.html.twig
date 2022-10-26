@@ -1,10 +1,8 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello UserController!{% endblock %}
+{% extends 'profile/index.html.twig' %}
 
 {% block body %}
 
-{% if "ROLE_ADMIN" in profile.roles %}
+{% if "ROLE_ADMIN" not in profile.roles %}
 {% set color = "primary" %}
 {% else %}
 {% set color = "secondary" %}
@@ -17,7 +15,7 @@
     <!-- différent bordure dépendant rôle user/admin -->
     <div class={{"col-4 border border-3 border-" ~ color}}>
     <!-- -->
-      <img src="https://picsum.photos/300/300" alt={{profile.profilePicture}} width="300" height="300">
+      <img src="https://picsum.photos/200/200" alt={{profile.profilePicture}} width="200" height="200">
     </div>
     <div class="col-8">
       <div class="row">
@@ -44,9 +42,5 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <h1>Last comment<h1>
-  </div>
 </div>
 {% endblock %}
-
