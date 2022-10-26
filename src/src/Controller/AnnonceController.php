@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnnonceController extends AbstractController
 {
-    #[Route('/home', name: "app_annonce_by_id")]
+    #[Route('/home', name: "app_annonce_list")]
     public function getAnnonceList(AnnonceRepository $annonceRepository) 
     {
 
