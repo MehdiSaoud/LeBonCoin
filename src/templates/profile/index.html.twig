@@ -45,7 +45,7 @@
     </div>
   </div>
   <!-- si admin montre les commentaires de la personnes -->
-  {% if "ROLE_ADMIN" in app.user.roles %}
+  {% if "ROLE_ADMIN" not in app.user.roles %}
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
@@ -56,6 +56,12 @@
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
         <div class="accordion-body">
           <!-- controller show comment personne -->
+          {% for  comment in profile.comments %}
+            <li>
+              <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+              <p>{{ comment.question }}</p>
+            </li>
+          {% endfor %}
         </div>
       </div>
     </div>
