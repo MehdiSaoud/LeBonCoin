@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+
+{% if "ROLE_ADMIN" in profile.roles %}
+{% set color = "primary" %}
+{% else %}
+{% set color = "secondary" %}
+{% endif %}
+
+
+<h1><a class='{{"text-" ~ color}}'> {{profile.pseudo}}</a> profile<h1>
+<div class="container">
+  <div class="row">
+    <!-- différent bordure dépendant rôle user/admin -->
+    <div class='col-4 border border-3 border-{{ color }}'>
+    <!-- -->
+      <img src="https://picsum.photos/300/300" alt={{profile.profilePicture}} width="300" height="300">
+    </div>
+    <div class="col-8">
+      <div class="row">
+        {{ profile.lastname ~ " " ~ profile.firstname}}
+      </div>
+      <div class="row">
+        cake day : {{ profile.accountCreationDate|date('Y-m-d') }}
+      </div>
+      {% if profile.localisation == null %}
+      {% set localisation = "unknown" %}
+      {% else %}
+      {% set localisation = profile.localisation %}
+      {% endif %}
+      <div class="row">
+        localisation : {{ localisation }}
+      </div>
+      {% if profile.note == null %}
+      {% set note = 0 %}
+      {% else %}
+      {% set note = profile.note %}
+      {% endif %}
+      <div class="row">
+        note : {{ note }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <h1>Last comment<h1>
+    {{ profile.comments[0].id }}
+  </div>
+</div>
+{% endblock %}
+
+{% block listeArticles %}
+
+
+{% endblock %}
