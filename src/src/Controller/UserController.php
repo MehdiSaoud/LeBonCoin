@@ -38,20 +38,20 @@ class UserController extends AbstractController
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
 
-        $pseudo = $form['pseudo']->getData();
-        $count_this_pseudo = $repository->countByPseudo($pseudo);
 
-        if ($count_this_pseudo == 0) {
-            $email = $form['email']->getData();
-            $count_this_mail = $repository->countByEmail($email);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pseudo = $form['pseudo']->getData();
+            $count_this_pseudo = $repository->countByPseudo($pseudo);
 
-            if ($count_this_mail == 0) {
+            if ($count_this_pseudo == 0) {
+                $email = $form['email']->getData();
+                $count_this_mail = $repository->countByEmail($email);
 
-                $password = $form['password']->getData();
-                if ($password === $form['password_confirm']->getData()) {
-                    $pass_hashed = password_hash($password, 1);
+                if ($count_this_mail == 0) {
+                    $password = $form['password']->getData();
+                    if ($password === $form['password_confirm']->getData()) {
+                        $pass_hashed = password_hash($password, 1);
 
-                    if ($form->isSubmitted() && $form->isValid()) {
                         $user->setAccountCreationDate(new \DateTime());
                         $user->setRole('ROLE_USER');
                         $user->setPassword($pass_hashed);
@@ -66,21 +66,21 @@ class UserController extends AbstractController
                         return $this->render('user/ok.html.twig', [
                             'data' => $data
                         ]);
+                    } else {
+                        $data['error']['pass'] = 'Les mots de passe ne correspondent pas';
                     }
                 } else {
-                    $data['error']['pass'] = 'Les mots de passe ne correspondent pas';
+                    $data['error']['email'] = 'Cette adresse mail existe déjà';
                 }
             } else {
-                $data['error']['email'] = 'Cette adresse mail existe déjà';
+                $data['error']['pseudo'] = 'Ce pseudo existe déjà';
             }
-        } else {
-            $data['error']['pseudo'] = 'Ce pseudo existe déjà';
         }
 
         return $this->render('user/register.html.twig', [
             'register_form' => $form->createView(),
             'data' => $data,
         ]);
-        
+
     }
 }
