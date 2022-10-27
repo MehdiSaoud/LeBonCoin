@@ -27,6 +27,12 @@ class Comment
     #[ORM\Column(length: 255)]
     private ?string $question = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $response = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $response_date = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +82,30 @@ class Comment
     public function setQuestion(string $question): self
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function getResponse(): ?string
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?string $response): self
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    public function getResponseDate(): ?\DateTimeImmutable
+    {
+        return $this->response_date;
+    }
+
+    public function setResponseDate(?\DateTimeImmutable $response_date): self
+    {
+        $this->response_date = $response_date;
 
         return $this;
     }

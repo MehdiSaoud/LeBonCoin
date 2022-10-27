@@ -17,6 +17,10 @@
         .user_comment{
             font-weight: bold;
         }
+        .response-form{
+            display: flex;
+            flex-direction: column;
+        }
     </style>
     <h1>{{ annonce.title }}</h1>
     <div id="annonce_section">
@@ -50,12 +54,28 @@
         <ul>
             {% for comment in comments %}
                 <li>
-                    <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
-                    <p>{{ comment.question }}</p>
+                    {% if comment.response == null and app.user.id == seller[0].id %}
+                    <form action='{{ path( "app_response_add", {"id": id}) }}' method="post">
+                        <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+                        <p class="comment">{{ comment.question }}</p>
+                        <button class="response-btn">Répondre</button>
+                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                    </form>
+                    {% else %}
+                        <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+                        <p class="comment">{{ comment.question }}</p>
+                    {% endif %}
                 </li>
+                {% if comment.response != null %}
+                <li>
+                    <p><span class="user_comment text-danger">{{ seller[0].pseudo }}</span> {{ comment.response_date|date("F jS \\a\\t g:ia") }}</p>
+                    <p>{{ comment.response }}</p>
+                </li>
+                {% endif %}
             {% endfor %}
-        </ul>
 
+        </ul>
+        {% if app.user != null and app.user.id != seller[0].id %}
         <form class="w-50 d-flex flex-column" action="{{ path( "app_comment_add", {'id': id}) }}" method="post">
             <label for="question">Commentaire</label>
             <textarea id="question" name="question" rows="3"></textarea>
@@ -63,7 +83,7 @@
                 Commenter
             </button>
         </form>
-
+        {% endif %}
     </div>
     
 {% endblock %}
