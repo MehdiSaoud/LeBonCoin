@@ -35,7 +35,7 @@
             <div class="row">
         {% if  annonce is iterable  %}
             {% for single in annonce %}
-                <div class="col-sm-6 col-md-4 portfolio-item">
+                <div class=" border border-dark border-1 rounded col-sm-6 col-md-4 portfolio-item">
                     <a href="/annonce/{{single.id}}">
                     <img class="img-fluid" src="{{single.photos}}">
                     </a>
@@ -49,7 +49,7 @@
             {% endfor %}
             
             {% else  %}
-                <div class="col-sm-6 col-md-4 portfolio-item">
+                <div class="border border-2 rounded col-sm-6 col-md-4 portfolio-item">
                     <a href="/annonce/{{annonce.id}}">
                     <img class="img-fluid" src="{{annonce.photos}}">
                     </a>
