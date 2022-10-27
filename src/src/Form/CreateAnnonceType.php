@@ -3,11 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Annonce;
+use App\Entity\Tag;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -28,6 +29,14 @@ class CreateAnnonceType extends AbstractType
             ])
             ->add('price', IntegerType::class, [
                 'label' => 'Prix'
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'label' => 'Ajoutez des tags',
+                'mapped' => false,
+                'choice_label' => 'tag',
+                'multiple' => true,
+                'expanded' => true
             ])
             ->add('Submit', SubmitType::class);
     }
