@@ -20,12 +20,16 @@
                 <div class="col-lg-12 text-center">
                     <h2 class="text-uppercase section-heading">Annonces</h2>
                     <h3 class="text-muted section-subheading">Vous etes libre de choisir une annonce qui vous convient</h3>
-                    <form class="w-50 d-flex flex-column" action="{{ path( "app_annonce_list") }}" method="post">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="" name="_search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                        
-                        <button class="btn btn-outline-success" type="submit">reset</button>
-                    </form>
+                    <div class="d-flex justify-content-center p-4">
+                        <form class="w-50 d-flex flex-grow-1" action="{{ path( "app_annonce_list") }}" method="post">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="" name="_search">
+                                <button class="p-2 bd-highlight btn btn-outline-success mx-2" type="submit">Search</button>
+                                <button class="p-2 bd-highlight btn btn-outline-success" type="submit">reset</button>
+                                             
+                        </form>
+                    </div>
+
+                   
                 </div>
             </div>
             <div class="row">
