@@ -38,7 +38,7 @@ class Annonce
     #[ORM\OneToMany(mappedBy: 'id_annonce', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?array $tags = [];
 
     public function __construct()
