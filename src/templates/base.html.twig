@@ -19,15 +19,15 @@
     <body class="container">
         <header class="d-flex justify-content-between my-4">
             <h3>LeBonCoin-2.0</h3>
-            <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark" id="mainNav">
+            <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark " id="mainNav">
                 <div class="container"><a class="navbar-brand" href="{{ path('app_annonce_list') }}">LebonCoin 2.0</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right collapsed" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                         <div class="collapse navbar-collapse" id="navbarResponsive">
                             <ul class="navbar-nav ms-auto text-uppercase">
                                 {% if app.user %}
-                                    <a href="{{ path('app_profile',{pseudo: app.user.pseudo}) }}">Profile </a>
-                                    <a href="{{ path('app_logout') }}">Logout</a>
+                                    <a class="text-warning" href="{{ path('app_profile',{pseudo: app.user.pseudo}) }}">Profile </a>
+                                    <a class="text-warning" href="{{ path('app_logout') }}">Logout</a>
                                 {% else %}
-                                    <li class="nav-item"><a href="{{ path('app_login') }}">Login</a></li>
+                                    <li class="nav-item"><a class="text-warning"href="{{ path('app_login') }}">Login</a></li>
                                 {% endif %}
                             </ul>
                         </div>
