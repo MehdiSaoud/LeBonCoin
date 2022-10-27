@@ -16,6 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-core" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-http" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/validator" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/snapappointments/bootstrap-select" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

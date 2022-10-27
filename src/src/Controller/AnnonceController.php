@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Annonce;
+use App\Entity\Tag;
 use App\Entity\User;
 use App\Form\CreateAnnonceType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CommentRepository;
+use App\Repository\TagRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnonceController extends AbstractController
 {
     #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceList(AnnonceRepository $annonceRepository) : Response
+    public function getAnnonceList(AnnonceRepository $annonceRepository): Response
     {
 
         $annonce = $annonceRepository->findAll();
@@ -37,17 +39,27 @@ class AnnonceController extends AbstractController
         return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce, 'comments' => $comments, 'seller' => $seller, 'id' => $id]);
     }
 
-    #[Route('/{pseudo}/creer-annonce', name: "app_annonce_create")]
-    public function createAnnonce(Request $request, EntityManagerInterface $entityManager) : Response
+    #[Route('/creer-annonce', name: "app_annonce_create")]
+    public function createAnnonce(Request $request, EntityManagerInterface $entityManager, TagRepository $tagRepository): Response
     {
         $annonce = new Annonce();
         $form = $this->createForm(CreateAnnonceType::class, $annonce);
         $form->handleRequest($request);
+        $tags = $tagRepository->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $annonce->setDateCreation(new \DateTimeImmutable());
+
+            $tags = $form['tags']->getData();
+            $tag_tab = [];
+            foreach ($tags as $item) {
+                $tag_tab[] = $item->getTag();
+            }
+            $annonce->setTags($tag_tab);
+
             $user_id = $this->getUser();
             $annonce->setIdUser($user_id);
+
             $entityManager->persist($annonce);
             $entityManager->flush();
 
@@ -55,7 +67,8 @@ class AnnonceController extends AbstractController
         }
 
         return $this->render('annonce/create.html.twig', [
-            'register_form' => $form->createView(),
+            'form' => $form->createView(),
+            'tags' => $tags
         ]);
     }
 }

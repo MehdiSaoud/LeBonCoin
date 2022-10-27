@@ -85,6 +85,7 @@
       <path value="$PROJECT_DIR$/src/vendor/symfony/options-resolver" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/form" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/src/vendor/snapappointments/bootstrap-select" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
