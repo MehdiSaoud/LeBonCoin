@@ -19,10 +19,17 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="text-uppercase section-heading">Annonces</h2>
-                    <h3 class="text-muted section-subheading">vous etes libre de choisir une annonce qui vous convient</h3>
+                    <h3 class="text-muted section-subheading">Vous etes libre de choisir une annonce qui vous convient</h3>
+                    <form class="w-50 d-flex flex-column" action="{{ path( "app_annonce_list") }}" method="post">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="" name="_search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        
+                        <button class="btn btn-outline-success" type="submit">reset</button>
+                    </form>
                 </div>
             </div>
             <div class="row">
+        {% if  annonce is iterable  %}
             {% for single in annonce %}
                 <div class="col-sm-6 col-md-4 portfolio-item">
                     <a href="/annonce/{{single.id}}">
@@ -36,6 +43,20 @@
                     </div>
                 </div>
             {% endfor %}
+            
+            {% else  %}
+                <div class="col-sm-6 col-md-4 portfolio-item">
+                    <a href="/annonce/{{annonce.id}}">
+                    <img class="img-fluid" src="{{annonce.photos}}">
+                    </a>
+                    
+                    <div class="portfolio-caption">
+                        <h4>{{(annonce.title)}}</h4>
+                        <p class="text-muted"> A partir de :{{(annonce.price)}} $</p>
+                        <p class="text-muted">Créée le  : {{(annonce.dateCreation|date("d/m/Y"))}}</p>
+                    </div>
+                </div>
+            {% endif %}
                 
                 
             </div>
