@@ -5,26 +5,25 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Repository\AnnonceRepository;
 use App\Repository\CommentRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AnnonceController extends AbstractController
 {
     #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceList(AnnonceRepository $annonceRepository) 
+    public function getAnnonceList(AnnonceRepository $annonceRepository,Request $request) 
     {
+        $search = $request->request->get('_search');
+        $sort =  $annonceRepository->findOneBy(['title' => $search]);
+        
+        var_dump($search);
+        
+        if ($sort) {
+            return $this->render('home/home.html.twig', ['annonce' => $sort]);
+        }
 
         $annonce = $annonceRepository->findAll();
-
-        return $this->render('home/home.html.twig', ['annonce' => $annonce]);
-    }
-
-    #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceSort(AnnonceRepository $annonceRepository) 
-    {
-
-        $annonce = $annonceRepository->findAll();
-
         return $this->render('home/home.html.twig', ['annonce' => $annonce]);
     }
 
