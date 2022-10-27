@@ -54,7 +54,7 @@
         <ul>
             {% for comment in comments %}
                 <li>
-                    {% if comment.response == null and app.user.id == seller[0].id %}
+                    {% if app.user != null and comment.response == null and app.user.id == seller[0].id %}
                     <form action='{{ path( "app_response_add", {"id": id}) }}' method="post">
                         <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
                         <p class="comment">{{ comment.question }}</p>
