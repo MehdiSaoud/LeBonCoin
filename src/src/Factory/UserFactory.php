@@ -48,7 +48,8 @@ final class UserFactory extends ModelFactory
             'firstname' => self::faker()->firstName(),
             'pseudo' => self::faker()->name(),
             'email' => self::faker()->email(),
-            'profilePicture' => self::faker()->word(),
+            'localisation'=> self::faker()->word(),
+            'profilePicture' => 'https://i.pinimg.com/564x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg',
             'accountCreationDate' => self::faker()->dateTime(),
         ];
     }
