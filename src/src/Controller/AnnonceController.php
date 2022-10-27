@@ -34,7 +34,7 @@ class AnnonceController extends AbstractController
         $seller = $annonceRepository->getSeller($id);
         $comments = $commentRepository->getComments($id);
 
-        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce, 'comments' => $comments, 'seller' => $seller, 'id' => $id]);
+        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce, 'comments' => $comments, 'seller' => $seller[0], 'id' => $id]);
     }
 
     #[Route('/{pseudo}/creer-annonce', name: "app_annonce_create")]

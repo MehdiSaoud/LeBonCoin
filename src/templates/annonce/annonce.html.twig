@@ -21,6 +21,11 @@
             display: flex;
             flex-direction: column;
         }
+        .profilePicture{
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
     </style>
     <h1>{{ annonce.title }}</h1>
     <div id="annonce_section">
@@ -44,8 +49,9 @@
             </li>
             <li>
                 <p class="annonce_subtitle">Vendeur :</p>
-                <p>{{ seller[0].pseudo }}</p>
-                <p>{{ seller[0].email }}</p>
+                <img class="profilePicture" src="{{ seller.profilePicture }}" alt="profilePicture"/>
+                <p>{{ seller.pseudo }}</p>
+                <p>{{ seller.email }}</p>
             </li>
         </ul>
     </div>
@@ -54,28 +60,28 @@
         <ul>
             {% for comment in comments %}
                 <li>
-                    {% if app.user != null and comment.response == null and app.user.id == seller[0].id %}
+                    {% if app.user != null and comment.response == null and app.user.id == seller.id %}
                     <form action='{{ path( "app_response_add", {"id": id}) }}' method="post">
-                        <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+                        <div><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</div>
                         <p class="comment">{{ comment.question }}</p>
                         <button class="response-btn">Répondre</button>
                         <input type="hidden" name="comment_id" value="{{ comment.id }}">
                     </form>
                     {% else %}
-                        <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
+                        <div><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</div>
                         <p class="comment">{{ comment.question }}</p>
                     {% endif %}
                 </li>
                 {% if comment.response != null %}
                 <li>
-                    <p><span class="user_comment text-danger">{{ seller[0].pseudo }}</span> {{ comment.response_date|date("F jS \\a\\t g:ia") }}</p>
+                    <div>{{ comment.creation_date|date("F jS \\a\\t g:ia") }} <span class="user_comment text-danger">{{ comment.pseudo }}</span><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/></div>
                     <p>{{ comment.response }}</p>
                 </li>
                 {% endif %}
             {% endfor %}
 
         </ul>
-        {% if app.user != null and app.user.id != seller[0].id %}
+        {% if app.user != null and app.user.id != seller.id %}
         <form class="w-50 d-flex flex-column" action="{{ path( "app_comment_add", {'id': id}) }}" method="post">
             <label for="question">Commentaire</label>
             <textarea id="question" name="question" rows="3"></textarea>
