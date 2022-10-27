@@ -18,16 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnnonceController extends AbstractController
 {
     #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceList(AnnonceRepository $annonceRepository) 
-    {
-
-        $annonce = $annonceRepository->findAll();
-
-        return $this->render('home/home.html.twig', ['annonce' => $annonce]);
-    }
-
-    #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceSort(AnnonceRepository $annonceRepository) 
+    public function getAnnonceList(AnnonceRepository $annonceRepository) : Response
     {
 
         $annonce = $annonceRepository->findAll();
