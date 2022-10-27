@@ -5,13 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegisterFormType;
 use App\Repository\UserRepository;
-use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,9 +21,6 @@ class UserController extends AbstractController
     }
 
 
-    /**
-     * @throws Exception
-     */
     #[Route('/inscription', name: 'app_user')]
     public function register(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $managerRegistry, UserRepository $repository): Response
     {
@@ -63,7 +56,6 @@ class UserController extends AbstractController
                         $firstname = $user->getFirstname();
                         $data = [$lastname, $firstname];
 
-
                         return $this->render('user/ok.html.twig', [
                             'data' => $data
                         ]);
@@ -82,6 +74,5 @@ class UserController extends AbstractController
             'register_form' => $form->createView(),
             'data' => $data,
         ]);
-
     }
 }

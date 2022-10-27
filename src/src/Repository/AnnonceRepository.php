@@ -43,7 +43,7 @@ class AnnonceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('annonce')
             ->innerJoin('annonce.id_user', 'user')
-            ->addSelect('user.pseudo', 'user.email')
+            ->addSelect('user.pseudo', 'user.email', 'user.id')
             ->andWhere('annonce.id LIKE :id')
             ->setParameter('id', $id)
             ->getQuery()

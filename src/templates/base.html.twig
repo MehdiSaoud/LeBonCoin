@@ -15,10 +15,6 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body class="container">
         <header class="d-flex justify-content-between my-4">
@@ -48,8 +44,11 @@
                 </div>
             </div>
         </footer>
-    </body>
 
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/script.min.js"></script>
+        {% block javascripts %}
+            <script src="{{ asset('js/formResponse.js') }}"></script>
+            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="assets/js/script.min.js"></script>
+        {% endblock %}
+    </body>
 </html>

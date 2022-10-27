@@ -44,7 +44,7 @@ class CommentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('comment')
             ->innerJoin('comment.id_annonce', 'annonce')
             ->innerJoin('comment.id_user', 'user')
-            ->addSelect('comment.question', 'comment.creation_date', 'user.pseudo')
+            ->addSelect('comment.question', 'comment.id', 'comment.creation_date', 'comment.response', 'comment.response_date', 'user.pseudo')
             ->andWhere('annonce.id LIKE :id')
             ->setParameter('id', $id)
             ->getQuery()
