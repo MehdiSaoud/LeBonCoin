@@ -58,8 +58,19 @@
           <!-- controller show comment personne -->
           {% for  comment in profile.comments %}
             <li>
-              <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
-              <p>{{ comment.question }}</p>
+              <a href="{{ path('app_annonce_by_id',{id: comment.idAnnonce.id }) }}">{{profile.pseudo}}</a>
+
+              {{comment.question}}
+              {{comment.creationDate|date('Y-m-d')}}
+               {{comment.id}}
+              <!-- sup comment -->
+              <form action="{{ path('app_comment_delete',{pseudo: profile.pseudo ,id: comment.id }) }}" method="post">
+                <button class="btn btn-lg btn-primary m-auto mb-4" type="submit">
+                  delete
+                </button>
+              </form>
+
+
             </li>
           {% endfor %}
         </div>

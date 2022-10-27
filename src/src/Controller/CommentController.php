@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Repository\CommentRepository;
 use App\Repository\AnnonceRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,5 +31,18 @@ class CommentController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_annonce_by_id', array("id" => $id));
+    }
+
+    #[Route('/profile/{pseudo}/commentDelete/{id}', name: 'app_comment_delete', methods: ["POST"])]
+    public function deleteUserCommentAction($pseudo, $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager) : Response
+    {
+        $comment = $commentRepository->findOneBy(["id" => $id]);
+        if (!$comment) {
+            throw $this->createNotFoundException('No guest found');
+        }
+    
+        $entityManager->remove($comment);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_profile', array("pseudo" => $pseudo));
     }
 }
