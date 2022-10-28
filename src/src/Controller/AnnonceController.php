@@ -78,16 +78,12 @@ class AnnonceController extends AbstractController
 
             if ($photo) {
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
-
-                // Move the file to the directory where brochures are stored
                 $photo->move($this->getParameter('annonce_img'), $newFilename);
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $annonce->setPhotos($newFilename);
+            } else {
+                $annonce->setPhotos('default.png');
             }
 
             $user_id = $this->getUser();
@@ -96,7 +92,9 @@ class AnnonceController extends AbstractController
             $entityManager->persist($annonce);
             $entityManager->flush();
 
-            return $this->render('annonce/myAnnonce.html.twig');
+            $id = $annonce->getId();
+
+            return $this->redirectToRoute('app_annonce_by_id', ['id' => $id]);
         }
 
         return $this->render('annonce/create.html.twig', [

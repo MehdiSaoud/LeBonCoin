@@ -150,7 +150,7 @@
             <p class="annonce_price">{{ annonce.price }} EUR</p>
             <div class="seller_infos">
                 <p class="annonce_subtitle">Vendeur :</p>
-                <img class="profilePicture" src="{{ seller.profilePicture }}" alt="profilePicture"/>
+                <img class="profilePicture" src="/uploads/user/{{ seller.profilePicture }}" alt="profilePicture"/>
                 <p>{{ seller.pseudo }}</p>
                 <p>{{ seller.email }}</p>
             </div>
@@ -168,19 +168,19 @@
                 <li>
                     {% if app.user != null and comment.response == null and app.user.id == seller.id %}
                     <form action='{{ path( "app_response_add", {"id": id}) }}' method="post">
-                        <div class="d-flex align-items-center"><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment mx-2">{{ comment.pseudo }}</span><span class="publication_date">{{ comment.creation_date|date("F jS \\a\\t g:ia") }}</span></div>
+                        <div class="d-flex align-items-center"><img class="profilePicture" src="/uploads/user/{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment mx-2">{{ comment.pseudo }}</span><span class="publication_date">{{ comment.creation_date|date("F jS \\a\\t g:ia") }}</span></div>
                         <p class="comment comment_customer">{{ comment.question }}</p>
                         <button class="response-btn">Répondre</button>
                         <input type="hidden" name="comment_id" value="{{ comment.id }}">
                     </form>
                     {% else %}
-                        <div class="d-flex align-items-center"><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment mx-2">{{ comment.pseudo }}</span><span class="publication_date">{{ comment.creation_date|date("F jS \\a\\t g:ia") }}</span></div>
+                        <div class="d-flex align-items-center"><img class="profilePicture" src="/uploads/user/{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment mx-2">{{ comment.pseudo }}</span><span class="publication_date">{{ comment.creation_date|date("F jS \\a\\t g:ia") }}</span></div>
                         <p class="comment comment_customer">{{ comment.question }}</p>
                     {% endif %}
                 </li>
                 {% if comment.response != null %}
                 <li class="d-flex flex-column align-items-end">
-                    <div class="d-flex align-items-center"><span class="publication_date">{{ comment.response_date|date("F jS \\a\\t g:ia") }}</span><span class="user_comment mx-2">{{ seller.pseudo }}</span><img class="profilePicture" src="{{ seller.profilePicture }}" alt="profilePicture"/></div>
+                    <div class="d-flex align-items-center"><span class="publication_date">{{ comment.response_date|date("F jS \\a\\t g:ia") }}</span><span class="user_comment mx-2">{{ seller.pseudo }}</span><img class="profilePicture" src="/uploads/user/{{ seller.profilePicture }}" alt="profilePicture"/></div>
                     <p class="response_seller">{{ comment.response }}</p>
                 </li>
                 {% endif %}

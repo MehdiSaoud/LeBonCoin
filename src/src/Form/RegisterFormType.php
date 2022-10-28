@@ -5,12 +5,14 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class RegisterFormType extends AbstractType
 {
@@ -32,6 +34,22 @@ class RegisterFormType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('password_confirm', PasswordType::class, [
                 'mapped' => false
+            ])
+            ->add('photos', FileType::class, [
+                'label' => 'Ajouter une photo de profil',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1000k',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Erreur avec votre image',
+                    ])
+                ]
             ])
             ->add('Submit', SubmitType::class);
     }
