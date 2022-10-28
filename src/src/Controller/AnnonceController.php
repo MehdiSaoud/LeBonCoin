@@ -9,11 +9,11 @@ use App\Form\CreateAnnonceType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CommentRepository;
 use App\Repository\TagRepository;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,11 +23,9 @@ class AnnonceController extends AbstractController
     public function getAnnonceList(AnnonceRepository $annonceRepository): Response
     {
 
-        $annonce = $annonceRepository->findAll();
-
-        return $this->render('home/home.html.twig', ['annonce' => $annonce]);
-    }
-
+    $annonce = $annonceRepository->findAll();
+    return $this->render('home/home.html.twig', ['annonce' => $annonce]);
+}
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository): Response
     {
@@ -36,7 +34,7 @@ class AnnonceController extends AbstractController
         $seller = $annonceRepository->getSeller($id);
         $comments = $commentRepository->getComments($id);
 
-        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce, 'comments' => $comments, 'seller' => $seller, 'id' => $id]);
+        return $this->render('annonce/annonce.html.twig', ['annonce' => $annonce, 'comments' => $comments, 'seller' => $seller[0], 'id' => $id]);
     }
 
     #[Route('/creer-annonce', name: "app_annonce_create")]

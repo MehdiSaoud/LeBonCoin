@@ -7,12 +7,36 @@
         #annonce_section{
             display: flex;
         }
-        #annonce_section ul{
+        label{
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        ul{
             list-style-type: none;
+            padding: 0;
+        }
+        .annonce_infos{
+            margin-left: 75px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 400px;
         }
         #annonce_section .annonce_subtitle{
             font-size: 15px;
             font-weight: bold;
+        }
+        .annonce_price{
+            font-weight: bold;
+            font-size: 20px;
+            color: dodgerblue;
+        }
+        .annonce_description{
+            padding: 25px 0;
+            margin: 50px 100px;
+        }
+        .annonce_description h2{
+            margin-bottom: 15px;
         }
         .user_comment{
             font-weight: bold;
@@ -21,69 +45,160 @@
             display: flex;
             flex-direction: column;
         }
+        .profilePicture{
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+        #comments_section{
+            margin: 50px 100px;
+        }
+        #comments_section h2{
+            margin-bottom: 30px;
+        }
+        #post_comment{
+            margin-top: 20px;
+        }
+        .comment_customer{
+            color: gray;
+            background-color: #efefef;
+            padding: 10px 20px;
+            margin: 15px 0 15px 45px;
+            border-radius: 10px;
+            max-width: 75%;
+        }
+        .response_seller{
+            color: white;
+            background-color: dodgerblue;
+            padding: 10px 20px;
+            margin: 15px 45px 15px 0;
+            border-radius: 10px;
+            max-width: 75%;
+        }
+        .response-btn{
+            border-radius: 30px;
+            background-color: transparent;
+            border: 1px solid dodgerblue;
+            color: dodgerblue;
+            font-size: 12px;
+            margin-left: 45px;
+            padding: 3px 8px;
+            transition: all 0.3s;
+        }
+        .response-btn:hover{
+            color: #166cc0;
+            border-color: #166cc0;
+            padding: 3px 15px;
+        }
+        .submit-comment{
+            color: white;
+            background-color: dodgerblue;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s;
+            width: 15%;
+        }
+        .submit-comment:hover{
+            background-color: #166cc0;
+        }
+        .comment-text{
+            border-radius: 10px 0 0 10px;
+            transition: all 0.3s;
+            background-color: #efefef;
+            color: grey;
+            border: none;
+            width: 85%;
+            padding: 15px;
+        }
+        .comment-text:focus{
+            outline: 1px solid dodgerblue;
+        }
+        .publication_date{
+            font-style: italic;
+            color: #a2a2a2;
+            font-size: 12px;
+        }
+        .addToCart_btn{
+            background-color: dodgerblue;
+            color: white;
+            border: none;
+            padding: 10px 80px;
+            transition: all 0.3s;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        .addToCart_btn:hover{
+            background-color: #0d6efd;
+        }
+        .seller_infos{
+            line-height: 5px;
+            margin: 40px 0;
+        }
+        .seller_infos .profilePicture{
+            margin: 5px 0 15px;
+        }
     </style>
-    <h1>{{ annonce.title }}</h1>
+    <div id="annonce_page">
     <div id="annonce_section">
         <img src="{{ annonce.photos }}" alt="{{ annonce.title }}">
-        <ul>
-            <li>
-                <p class="annonce_subtitle">Titre :</p>
-                <p>{{ annonce.title }}</p>
-            </li>
-            <li>
-                <p class="annonce_subtitle">Date de création :</p>
-                <p>{{ annonce.dateCreation|date("F jS \\a\\t g:ia") }}</p>
-            </li>
-            <li>
-                <p class="annonce_subtitle">Description :</p>
-                <p>{{ annonce.description }}</p>
-            </li>
-            <li>
-                <p class="annonce_subtitle">Prix :</p>
-                <p>{{ annonce.price }} €</p>
-            </li>
-            <li>
+        <div class="annonce_infos">
+            <h1>{{ annonce.title }}</h1>
+            <hr>
+            <div>
+                <p><span class="annonce_subtitle">Date de création :</span> {{ annonce.dateCreation|date("F jS \\a\\t g:ia") }}</p>
+            </div>
+            <p class="annonce_price">{{ annonce.price }} EUR</p>
+            <div class="seller_infos">
                 <p class="annonce_subtitle">Vendeur :</p>
-                <p>{{ seller[0].pseudo }}</p>
-                <p>{{ seller[0].email }}</p>
-            </li>
-        </ul>
+                <img class="profilePicture" src="{{ seller.profilePicture }}" alt="profilePicture"/>
+                <p>{{ seller.pseudo }}</p>
+                <p>{{ seller.email }}</p>
+            </div>
+            <button class="addToCart_btn">Ajouter au panier</button>
+        </div>
+    </div>
+    <div class="annonce_description">
+       <h2>Description :</h2>
+       <p>{{ annonce.description }}</p>
     </div>
     <div id="comments_section">
         <h2>Commentaires :</h2>
         <ul>
             {% for comment in comments %}
                 <li>
-                    {% if app.user != null and comment.response == null and app.user.id == seller[0].id %}
+                    {% if app.user != null and comment.response == null and app.user.id == seller.id %}
                     <form action='{{ path( "app_response_add", {"id": id}) }}' method="post">
-                        <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
-                        <p class="comment">{{ comment.question }}</p>
+                        <div class="d-flex align-items-center"><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment mx-2">{{ comment.pseudo }}</span><span class="publication_date">{{ comment.creation_date|date("F jS \\a\\t g:ia") }}</span></div>
+                        <p class="comment comment_customer">{{ comment.question }}</p>
                         <button class="response-btn">Répondre</button>
                         <input type="hidden" name="comment_id" value="{{ comment.id }}">
                     </form>
                     {% else %}
-                        <p><span class="user_comment">{{ comment.pseudo }}</span> {{ comment.creation_date|date("F jS \\a\\t g:ia") }}</p>
-                        <p class="comment">{{ comment.question }}</p>
+                        <div class="d-flex align-items-center"><img class="profilePicture" src="{{ comment.profilePicture }}" alt="profilePicture"/><span class="user_comment mx-2">{{ comment.pseudo }}</span><span class="publication_date">{{ comment.creation_date|date("F jS \\a\\t g:ia") }}</span></div>
+                        <p class="comment comment_customer">{{ comment.question }}</p>
                     {% endif %}
                 </li>
                 {% if comment.response != null %}
-                <li>
-                    <p><span class="user_comment text-danger">{{ seller[0].pseudo }}</span> {{ comment.response_date|date("F jS \\a\\t g:ia") }}</p>
-                    <p>{{ comment.response }}</p>
+                <li class="d-flex flex-column align-items-end">
+                    <div class="d-flex align-items-center"><span class="publication_date">{{ comment.response_date|date("F jS \\a\\t g:ia") }}</span><span class="user_comment mx-2">{{ seller.pseudo }}</span><img class="profilePicture" src="{{ seller.profilePicture }}" alt="profilePicture"/></div>
+                    <p class="response_seller">{{ comment.response }}</p>
                 </li>
                 {% endif %}
             {% endfor %}
 
         </ul>
-        {% if app.user != null and app.user.id != seller[0].id %}
-        <form class="w-50 d-flex flex-column" action="{{ path( "app_comment_add", {'id': id}) }}" method="post">
-            <label for="question">Commentaire</label>
-            <textarea id="question" name="question" rows="3"></textarea>
-            <button class="btn btn-lg btn-primary m-auto mb-4" type="submit">
-                Commenter
-            </button>
+        {% if app.user != null and app.user.id != seller.id %}
+        <form id="post_comment" action="{{ path( "app_comment_add", {'id': id}) }}" method="post">
+            <label for="question">Commenter l'annonce</label>
+            <div class="d-flex">
+                <textarea class="comment-text" id="question" name="question" rows="2" placeholder="Votre commentaire..."></textarea>
+                <button class="submit-comment" type="submit">
+                    Commenter
+                </button>
+            </div>
         </form>
         {% endif %}
     </div>
-    
+    </div>
+
 {% endblock %}

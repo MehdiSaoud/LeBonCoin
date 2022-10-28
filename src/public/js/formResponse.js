@@ -8,10 +8,12 @@ for(let i =0; i<responseBtn.length; i++){
         formContainer.classList.add("response-form");
         formContainer.innerHTML=`
             <label for="response">Réponse</label>
-            <textarea id="response" name="response" rows="3"></textarea>
-            <button class="btn btn-lg btn-primary w-25" type="submit">
-                Répondre
-            </button>`
+            <div class="d-flex">
+                <textarea class="comment-text" id="response" name="response" rows="2" placeholder="Votre réponse..."></textarea>
+                <button class="submit-comment" type="submit">
+                    Répondre
+                </button>
+            </div>`
         comment.after(formContainer);
         responseBtn[i].style.display="none";
     });
