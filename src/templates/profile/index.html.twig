@@ -45,7 +45,7 @@
     </div>
   </div>
   <!-- si admin montre les commentaires de la personnes -->
-  {% if "ROLE_ADMIN" not in app.user.roles %}
+  {% if "ROLE_ADMIN" in app.user.roles %}
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
