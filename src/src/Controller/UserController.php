@@ -57,6 +57,8 @@ class UserController extends AbstractController
                             $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
                             $photo->move($this->getParameter('user_img'), $newFilename);
                             $user->setProfilePicture($newFilename);
+                        } else {
+                            $user->setProfilePicture('default.jpeg');
                         }
 
                         $entityManager->persist($user);

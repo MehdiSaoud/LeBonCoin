@@ -73,6 +73,8 @@ class AnnonceController extends AbstractController
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
                 $photo->move($this->getParameter('annonce_img'), $newFilename);
                 $annonce->setPhotos($newFilename);
+            } else {
+                $annonce->setPhotos('default.png');
             }
 
             $user_id = $this->getUser();
