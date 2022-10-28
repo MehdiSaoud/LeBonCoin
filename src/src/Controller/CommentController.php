@@ -33,6 +33,20 @@ class CommentController extends AbstractController
         return $this->redirectToRoute('app_annonce_by_id', array("id" => $id));
     }
 
+    #[Route('/annonce/{id}/response', name: 'app_response_add', methods: ["POST"])]
+    public function addResponse($id, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
+    {
+        $comment_id = $request->request->get("comment_id");
+        $comment = $commentRepository->findOneBy(["id" => $comment_id]);
+        $comment->setResponse($request->request->get("response"))
+            ->setResponseDate(new \DateTimeImmutable());
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_annonce_by_id', array("id" => $id));
+    }
+
     #[Route('/profile/{pseudo}/commentDelete/{id}', name: 'app_comment_delete', methods: ["POST"])]
     public function deleteUserCommentAction($pseudo, $id, CommentRepository $commentRepository, EntityManagerInterface $entityManager) : Response
     {

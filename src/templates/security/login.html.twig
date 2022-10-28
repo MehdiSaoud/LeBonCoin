@@ -10,7 +10,7 @@
     </div>
 {% endif %}
 -->
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center pt-5">
     <form class="w-50 d-flex flex-column" method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
