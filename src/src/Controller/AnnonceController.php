@@ -69,15 +69,9 @@ class AnnonceController extends AbstractController
 
             if ($photo) {
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
-
-                // Move the file to the directory where brochures are stored
                 $photo->move($this->getParameter('annonce_img'), $newFilename);
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
                 $annonce->setPhotos($newFilename);
             }
 
