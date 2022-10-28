@@ -22,7 +22,7 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/inscription', name: 'app_user')]
+    #[Route('/inscription', name: 'app_user_register')]
     public function register(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $managerRegistry, UserRepository $repository, SluggerInterface $slugger): Response
     {
         $data['error']['pseudo'] = '';
