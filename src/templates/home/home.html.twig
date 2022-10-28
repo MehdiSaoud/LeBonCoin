@@ -37,7 +37,7 @@
             {% for single in annonce %}
                 <div class=" border border-dark border-1 rounded col-sm-6 col-md-4 portfolio-item">
                     <a href="/annonce/{{single.id}}">
-                    <img class="img-fluid" src="{{single.photos}}">
+                    <img class="img-fluid" src="/uploads/annonce/{{single.photos}}">
                     </a>
                     
                     <div class="portfolio-caption">
@@ -51,7 +51,7 @@
             {% else  %}
                 <div class="border border-2 rounded col-sm-6 col-md-4 portfolio-item">
                     <a href="/annonce/{{annonce.id}}">
-                    <img class="img-fluid" src="{{annonce.photos}}">
+                    <img class="img-fluid" src="/uploads/annonce/{{annonce.photos}}">
                     </a>
                     
                     <div class="portfolio-caption">

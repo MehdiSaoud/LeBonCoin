@@ -83,7 +83,9 @@ class AnnonceController extends AbstractController
             $entityManager->persist($annonce);
             $entityManager->flush();
 
-            return $this->render('annonce/myAnnonce.html.twig');
+            $id = $annonce->getId();
+
+            return $this->redirectToRoute('app_annonce_by_id', ['id' => $id]);
         }
 
         return $this->render('annonce/create.html.twig', [
