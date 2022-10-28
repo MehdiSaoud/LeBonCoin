@@ -9,6 +9,7 @@ use App\Form\CreateAnnonceType;
 use App\Repository\AnnonceRepository;
 use App\Repository\CommentRepository;
 use App\Repository\TagRepository;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -16,24 +17,25 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AnnonceController extends AbstractController
 {
     #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceList(AnnonceRepository $annonceRepository,Request $request) 
-{
-    $search = $request->request->get('_search');
-    $sort =  $annonceRepository->findOneBy(['title' => $search]);
-    
-   
-    
-    if ($sort) {
-        return $this->render('home/home.html.twig', ['annonce' => $sort]);
+    public function getAnnonceList(AnnonceRepository $annonceRepository, Request $request)
+    {
+        $search = $request->request->get('_search');
+        $sort = $annonceRepository->findOneBy(['title' => $search]);
+
+
+        if ($sort) {
+            return $this->render('home/home.html.twig', ['annonce' => $sort]);
+        }
+
+        $annonce = $annonceRepository->findAll();
+        return $this->render('home/home.html.twig', ['annonce' => $annonce]);
     }
 
-    $annonce = $annonceRepository->findAll();
-    return $this->render('home/home.html.twig', ['annonce' => $annonce]);
-}
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository): Response
     {
@@ -46,7 +48,7 @@ class AnnonceController extends AbstractController
     }
 
     #[Route('/creer-annonce', name: "app_annonce_create")]
-    public function createAnnonce(Request $request, EntityManagerInterface $entityManager, TagRepository $tagRepository): Response
+    public function createAnnonce(Request $request, EntityManagerInterface $entityManager, TagRepository $tagRepository, SluggerInterface $slugger): Response
     {
         $annonce = new Annonce();
         $form = $this->createForm(CreateAnnonceType::class, $annonce);
@@ -62,6 +64,22 @@ class AnnonceController extends AbstractController
                 $tag_tab[] = $item->getTag();
             }
             $annonce->setTags($tag_tab);
+
+            $photo = $form->get('photos')->getData();
+
+            if ($photo) {
+                $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                $photo->move($this->getParameter('annonce_img'), $newFilename);
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $annonce->setPhotos($newFilename);
+            }
 
             $user_id = $this->getUser();
             $annonce->setIdUser($user_id);

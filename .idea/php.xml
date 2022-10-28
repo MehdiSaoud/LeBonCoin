@@ -86,6 +86,8 @@
       <path value="$PROJECT_DIR$/src/vendor/symfony/form" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/validator" />
       <path value="$PROJECT_DIR$/src/vendor/snapappointments/bootstrap-select" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-intl-idn" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
