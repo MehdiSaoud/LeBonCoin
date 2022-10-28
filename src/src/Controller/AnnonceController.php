@@ -26,11 +26,10 @@ class AnnonceController extends AbstractController
     public function getAnnonceList(AnnonceRepository $annonceRepository, Request $request)
     {
         $search = $request->request->get('_search');
-        $sort = $annonceRepository->findOneBy(['title' => $search]);
 
-
-        if ($sort) {
-            return $this->render('home/home.html.twig', ['annonce' => $sort, 'home' => True]);
+        if ($search) {
+            $annonce = $annonceRepository->searchAnnonce($search);
+            return $this->render('home/home.html.twig', ['annonce' => $annonce, 'home' => True]);
         }
 
         $annonce = $annonceRepository->findAll();

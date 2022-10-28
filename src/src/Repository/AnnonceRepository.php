@@ -50,6 +50,22 @@ class AnnonceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Recherche par titre d'annonce ou localisation
+     * @param $search
+     * @return array
+     */
+    public function searchAnnonce($search): array
+    {
+        return $this->createQueryBuilder('annonce')
+                ->innerJoin('annonce.id_user', 'user')
+                ->where('annonce.title LIKE :search')
+                ->orWhere('user.localisation LIKE :search')
+                ->setParameter('search', $search.'%')
+                ->getQuery()
+                ->getResult();
+    }
+
 //    /**
 //     * @return Annonce[] Returns an array of Annonce objects
 //     */
