@@ -25,7 +25,7 @@ class AnnonceController extends AbstractController
     $search = $request->request->get('_search');
     $sort =  $annonceRepository->findOneBy(['title' => $search]);
     
-    var_dump($search);
+   
     
     if ($sort) {
         return $this->render('home/home.html.twig', ['annonce' => $sort]);
