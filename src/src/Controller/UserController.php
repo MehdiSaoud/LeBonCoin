@@ -68,9 +68,7 @@ class UserController extends AbstractController
                         $firstname = $user->getFirstname();
                         $data = [$lastname, $firstname];
 
-                        return $this->render('user/ok.html.twig', [
-                            'data' => $data
-                        ]);
+                        return $this->redirectToRoute('app_login');
                     } else {
                         $data['error']['pass'] = 'Les mots de passe ne correspondent pas';
                     }

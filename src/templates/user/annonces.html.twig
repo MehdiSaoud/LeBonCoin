@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    {% if annonces is empty %}
+        <h3>Vous n'avez publié aucune annonce...</h3>
+    {% else %}
+        {% for annonce in annonces %}
+            <div>
+                <h3>{{ annonce.title }}</h3>
+                <p>{{ annonce.description }}</p>
+                <p>{{ annonce.price }}€</p>
+                <ul>
+                    {% for tag in annonce.tags %}
+                        <li>{{ tag }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <hr style="height: 1px; width: 200px; border: none; background-color: black">
+        {% endfor %}
+    {% endif %}
+{% endblock %}
