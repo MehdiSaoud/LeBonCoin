@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends (home) ? 'base.html.twig' : 'empty.html.twig' %}
 
 {% block title %}titre{% endblock %}
 
 {% block body %}
 
  <div id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="54">
-    
+    {% if home %}
     <header class="masthead" style="background-image:url('assets/img/header-bg.jpg');">
         <div class="container">
             <div class="intro-text">
@@ -14,14 +14,17 @@
             </div>
         </div>
     </header>
+    {% endif %}
     <section class="bg-light" id="portfolio">
         <div class="container">
+            {% if home %}
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="text-uppercase section-heading">Annonces</h2>
                     <h3 class="text-muted section-subheading">vous etes libre de choisir une annonce qui vous convient</h3>
                 </div>
             </div>
+            {% endif %}
             <div class="row">
             {% for single in annonce %}
                 <div class="col-sm-6 col-md-4 portfolio-item">
@@ -49,6 +52,4 @@
 
 </div>
 
-  
-           
 {% endblock %}
