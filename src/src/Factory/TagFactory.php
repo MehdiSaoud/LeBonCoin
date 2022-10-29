@@ -56,4 +56,15 @@ final class TagFactory extends ModelFactory
     {
         return Tag::class;
     }
+
+    public static function attributeTags(): array
+    {
+        $tags = array();
+        $nbTag = rand(1,3);
+        for ($i = 1; $i <= $nbTag; $i++) {
+            $newTag = TagFactory::random()->getTag();
+            $tags[] = $newTag;
+        }
+        return $tags;
+    }
 }
