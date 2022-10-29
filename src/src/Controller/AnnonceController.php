@@ -22,21 +22,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AnnonceController extends AbstractController
 {
-    #[Route('/home', name: "app_annonce_list")]
-    public function getAnnonceList(AnnonceRepository $annonceRepository, Request $request)
-    {
-        $search = $request->request->get('_search');
-
-        if ($search) {
-            $annonce = $annonceRepository->searchAnnonce($search);
-            return $this->render('home/home.html.twig', ['annonce' => $annonce, 'home' => True]);
-        }
-
-        $annonce = $annonceRepository->getAllAnnonces();
-
-        return $this->render('home/home.html.twig', ['annonce' => $annonce, 'home' => True]);
-    }
-
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository): Response
     {
@@ -92,6 +77,19 @@ class AnnonceController extends AbstractController
         return $this->render('annonce/create.html.twig', [
             'form' => $form->createView(),
             'tags' => $tags
+        ]);
+    }
+
+    #[Route('/mes-annonces/', name: "app_user_annonces")]
+    public function userAnnonces(UserRepository $userRepository, AnnonceRepository $annonceRepository): Response
+    {
+        $user_email = $this->getUser()->getUserIdentifier();
+        $user = $userRepository->findBy(["email" => $user_email]);
+        $annonces = $annonceRepository->findBy(["id_user" => $user[0]->getId()]);
+
+
+        return $this->render('user/annonces.html.twig' ,[
+            'annonces' => $annonces
         ]);
     }
 }

@@ -20,7 +20,7 @@ class DefaultController extends AbstractController
             return $this->render('home/home.html.twig', ['annonce' => $annonce, 'home' => True]);
         }
 
-        $annonce = $annonceRepository->findAll();
+        $annonce = $annonceRepository->getAllAnnonces();
 
         return $this->render('home/home.html.twig', ['annonce' => $annonce, 'home' => True]);
     }
