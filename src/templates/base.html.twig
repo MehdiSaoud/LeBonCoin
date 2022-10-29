@@ -27,6 +27,9 @@
                             <ul class="navbar-nav ms-auto text-uppercase">
                                 {% if app.user %}
                                     <a class="text-warning me-3" href="{{ path('app_default') }}">Accueil</a>
+                                    {% if app.user.roles[0] == "ROLE_ADMIN" %}
+                                        <a class="text-warning me-3" href="{{ path('app_ajout_tag') }}">Ajouter un tag</a>
+                                    {% endif %}
                                     <a class="text-warning me-3" href="{{ path('app_user_annonces') }}">Mes annonces</a>
                                     <a class="text-warning me-3" href="{{ path('app_annonce_create') }}">Créer une annonce</a>
                                     <a class="text-warning me-3" href="{{ path('app_profile',{pseudo: app.user.pseudo}) }}">Profile </a>

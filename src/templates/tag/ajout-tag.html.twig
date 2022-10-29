@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout de tags{% endblock %}
+
+{% block body %}
+    <style>
+        #add-tag {
+            margin: 100px 0 0 0;
+        }
+    </style>
+    <div id="add-tag">
+        <form id="post_tag" action="{{ path( "app_ajout_tag") }}" method="post">
+            <label for="tag_name">Ajouter un nouveau tag</label>
+            <div class="d-flex">
+                <input class="tag-text" id="tag_name" name="tag_name" placeholder="Nom du tag..."/>
+                <button class="submit-tag" type="submit">
+                    Ajouter
+                </button>
+            </div>
+        </form>
+        {% if test != null %}
+            <p class="text-success">{{ test }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
