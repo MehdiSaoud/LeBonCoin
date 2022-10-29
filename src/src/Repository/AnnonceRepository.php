@@ -61,7 +61,7 @@ class AnnonceRepository extends ServiceEntityRepository
                 ->innerJoin('annonce.id_user', 'user')
                 ->where('annonce.title LIKE :search')
                 ->orWhere('user.localisation LIKE :search')
-                ->addSelect('user.pseudo', 'user.profilePicture', 'user.localisation', 'annonce.id', 'annonce.price', 'annonce.dateCreation', 'annonce.photos', 'annonce.title')
+                ->addSelect('user.pseudo', 'user.profilePicture', 'user.localisation', 'annonce.id', 'annonce.price', 'annonce.dateCreation', 'annonce.photos', 'annonce.title', 'annonce.tags')
                 ->setParameter('search', $search.'%')
                 ->getQuery()
                 ->getResult();

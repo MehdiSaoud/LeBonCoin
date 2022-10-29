@@ -15,7 +15,7 @@ class TagController extends AbstractController
     #[Route('/admin-ajout-tag', name: 'app_ajout_tag_page', methods: ["GET"])]
     public function addTagPage(): Response
     {
-        return $this->render('tag/ajout-tag.html.twig', ['test' => null]);
+        return $this->render('tag/ajout-tag.html.twig', ['tag_msg' => null]);
     }
 
     #[Route('/admin-ajout-tag', name: 'app_ajout_tag', methods: ["POST"])]
@@ -30,11 +30,11 @@ class TagController extends AbstractController
         if(!$tagExist){
             $entityManager->persist($newTag);
             $entityManager->flush();
-            $test = 'Tag ajouté !';
+            $tag_msg = 'Tag ajouté !';
         }else{
-            $test = 'Le tag existe déjà.';
+            $tag_msg = 'Le tag existe déjà.';
         }
 
-        return $this->render('tag/ajout-tag.html.twig', ['test' => $test]);
+        return $this->render('tag/ajout-tag.html.twig', ['tag_msg' => $tag_msg]);
     }
 }
