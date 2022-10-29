@@ -22,6 +22,32 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AnnonceController extends AbstractController
 {
+
+    #[Route('/home', name: "app_annonce_list")]
+    public function getAnnonceList(AnnonceRepository $annonceRepository,TagRepository $tagRepository,Request $request) 
+{
+    $search = $request->request->get('_search');
+    $searchRadio = $request->request->get('_radioSearch');
+
+    $sort =  $annonceRepository->findOneBy(['title' => $search]);
+    $sortCategory =  $annonceRepository->findOneBy(['tags' => $searchRadio]);
+        
+    if ($sort) {
+        return $this->render('home/home.html.twig', ['annonce' => $sort]);
+    }
+
+    if ($sortCategory) {
+        return $this->render('home/home.html.twig', ['annonce' => $sortCategory]);
+    }
+    $tags = $tagRepository->findAll();
+    $annonce = $annonceRepository->findAll();
+    return $this->render('home/home.html.twig', ['annonce' => $annonce,'tags' => $tags]);
+    
+    
+ 
+    
+}
+
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository): Response
     {

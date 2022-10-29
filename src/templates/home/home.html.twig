@@ -53,19 +53,33 @@
                     <div class="d-flex justify-content-center p-4">
                         <form class="w-50 d-flex flex-grow-1" action="{{ path( "app_default") }}" method="post">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="" name="_search">
-                                <button class="p-2 bd-highlight btn btn-outline-success mx-2" type="submit">Search</button>
-                                <button class="p-2 bd-highlight btn btn-outline-success" type="submit">reset</button>
-                                             
+                            
+                            <button class="p-2 bd-highlight btn btn-outline-success" type="submit">reset</button>             
                         </form>
                     </div>
-
-                   
+                    
+                    <form class="w-50 d-flex flex-grow-1" action="{{ path( "app_annonce_list") }}" method="post">
+                        <button class="p-2 bd-highlight btn btn-outline-success mx-2" type="submit">Search</button>
+                        
+                        
+                        {% for tag in tags %}
+                        <div class="my-2 form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="_radioSearch">
+                            <label class="form-check-label" for="inlineCheckbox1">{{(tag)}}</label>
+                         </div>
+                         {% endfor %} 
+                         
+                         
+                    </form>
+                                  
                 </div>
             </div>
             {% endif %}
             <div class="row">
         {% if  annonce is iterable  %}
+        
             {% for single in annonce %}
+
                 <div class="col-sm-6 col-md-3 portfolio-item">
                     <div class="border rounded">
                         <a href="/annonce/{{single.id}}">
@@ -84,10 +98,18 @@
                                 </ul>
                             </div>
                         </div>
+
                     </div>
+                    <div class="d-flex">
+                     {% for tag in single.tags %}
+                        <h5><span class=" mx-1 badge bg-secondary">{{(tag)}}</span></h5>
+                    {% endfor %} 
+                    </div>
+                    
                 </div>
             {% endfor %}
             {% else  %}
+
                 <div class="col-sm-6 col-md-3 portfolio-item">
                     <div class="border rounded">
                         <a href="/annonce/{{annonce.id}}">
@@ -106,8 +128,12 @@
                                 </ul>
                             </div>
                         </div>
+
                     </div>
-                </div>
+                </div> #}
+
+            {{(dump(annonce))}}
+
             {% endif %}
                 
             </div>
