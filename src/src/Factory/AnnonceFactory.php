@@ -42,7 +42,7 @@ final class AnnonceFactory extends ModelFactory
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'title' => self::faker()->word(),
             'description' => self::faker()->text(),
-            'price' => self::faker()->randomFloat(),
+            'price' => self::faker()->randomFloat(1),
             'dateCreation' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'id_user' => UserFactory::random(),
             'photos' => 'default.png',

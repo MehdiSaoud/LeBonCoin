@@ -61,9 +61,19 @@ class AnnonceRepository extends ServiceEntityRepository
                 ->innerJoin('annonce.id_user', 'user')
                 ->where('annonce.title LIKE :search')
                 ->orWhere('user.localisation LIKE :search')
+                ->addSelect('user.pseudo', 'user.profilePicture', 'user.localisation', 'annonce.id', 'annonce.price', 'annonce.dateCreation', 'annonce.photos', 'annonce.title')
                 ->setParameter('search', $search.'%')
                 ->getQuery()
                 ->getResult();
+    }
+
+    public function getAllAnnonces(): array
+    {
+        return $this->createQueryBuilder('annonce')
+            ->innerJoin('annonce.id_user', 'user')
+            ->addSelect('user.pseudo', 'user.profilePicture', 'user.localisation', 'annonce.id', 'annonce.price', 'annonce.dateCreation', 'annonce.photos', 'annonce.title')
+            ->getQuery()
+            ->getResult();
     }
 
 //    /**
