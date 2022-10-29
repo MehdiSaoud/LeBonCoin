@@ -1,11 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends (home) ? 'base.html.twig' : 'empty.html.twig' %}
 
 {% block title %}titre{% endblock %}
 
 {% block body %}
-
+<style>
+    .portfolio-item{
+        transition: all 0.3s;
+    }
+    .portfolio-item:hover{
+        transform: scale(1.025);
+    }
+    .portfolio-caption h4{
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .portfolio-caption p{
+        line-height: 20px;
+    }
+    .portfolio-caption ul{
+        list-style-type: none;
+        padding: 0;
+        line-height: 20px;
+        margin: 0 0 0 20px;
+    }
+    .portfolio-caption ul .localisation{
+        color: #929292;
+    }
+    .profilePicture{
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+</style>
  <div id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="54">
-    
+    {% if home %}
     <header class="masthead" style="background-image:url('assets/img/header-bg.jpg');">
         <div class="container">
             <div class="intro-text">
@@ -14,14 +42,16 @@
             </div>
         </div>
     </header>
+    {% endif %}
     <section class="bg-light" id="portfolio">
         <div class="container">
+            {% if home %}
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="text-uppercase section-heading">Annonces</h2>
                     <h3 class="text-muted section-subheading">Vous etes libre de choisir une annonce qui vous convient</h3>
                     <div class="d-flex justify-content-center p-4">
-                        <form class="w-50 d-flex flex-grow-1" action="{{ path( "app_annonce_list") }}" method="post">
+                        <form class="w-50 d-flex flex-grow-1" action="{{ path( "app_default") }}" method="post">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" value="" name="_search">
                             
                             <button class="p-2 bd-highlight btn btn-outline-success" type="submit">reset</button>             
@@ -44,19 +74,31 @@
                                   
                 </div>
             </div>
+            {% endif %}
             <div class="row">
         {% if  annonce is iterable  %}
         
             {% for single in annonce %}
-            
-                <div class=" border border-dark border-1 rounded col-sm-6 col-md-4 portfolio-item">
-                    <a href="/annonce/{{single.id}}">
-                    <img class="img-fluid" src="{{single.photos}}">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>{{(single.title)}}</h4>
-                        <p class="text-muted"> A partir de :<h6>{{(single.price)}} $</h6></p>
-                        <p class="text-muted">Créée le  : {{(single.dateCreation|date("d/m/Y"))}}</p>
+
+                <div class="col-sm-6 col-md-3 portfolio-item">
+                    <div class="border rounded">
+                        <a href="/annonce/{{single.id}}">
+                        <img class="img-fluid" src="/uploads/annonce/{{single.photos}}">
+                        </a>
+
+                        <div class="portfolio-caption text-start">
+                            <h4>{{(single.title)}}</h4>
+                            <p class="text-muted"> A partir de : {{(single.price)}} €</p>
+                            <p class="text-muted">Créée le  : {{(single.dateCreation|date("d/m/Y"))}}</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img class="profilePicture" src="/uploads/user/{{ single.profilePicture }}" alt="profilePicture">
+                                <ul>
+                                    <li class="text-muted">{{ single.pseudo }}</li>
+                                    <li class="localisation">{{ single.localisation }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="d-flex">
                      {% for tag in single.tags %}
@@ -66,17 +108,27 @@
                     
                 </div>
             {% endfor %}
-            
             {% else  %}
-                {# <div class="border border-2 rounded col-sm-6 col-md-4 portfolio-item">
-                    <a href="/annonce/{{annonce.id}}">
-                    <img class="img-fluid" src="{{annonce.photos}}">
-                    </a>
-                    
-                    <div class="portfolio-caption">
-                        <h4>{{(annonce.title)}}</h4>
-                        <p class="text-muted"> A partir de :{{(annonce.price)}} $</p>
-                        <p class="text-muted">Créée le  : {{(annonce.dateCreation|date("d/m/Y"))}}</p>
+
+                <div class="col-sm-6 col-md-3 portfolio-item">
+                    <div class="border rounded">
+                        <a href="/annonce/{{annonce.id}}">
+                            <img class="img-fluid" src="/uploads/annonce/{{annonce.photos}}">
+                        </a>
+
+                        <div class="portfolio-caption text-start">
+                            <h4>{{(single.title)}}</h4>
+                            <p class="text-muted"> A partir de : {{(annonce.price)}} €</p>
+                            <p class="text-muted">Créée le  : {{(annonce.dateCreation|date("d/m/Y"))}}</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <img class="profilePicture" src="/uploads/user/{{ annonce.profilePicture }}" alt="profilePicture">
+                                <ul>
+                                    <li class="text-muted">{{ annonce.pseudo }}</li>
+                                    <li class="localisation">{{ annonce.localisation }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div> #}
 
@@ -84,18 +136,10 @@
 
             {% endif %}
                 
-                
             </div>
         </div>
     </section>
-  
-    
-    
-    
-
 
 </div>
 
-  
-           
 {% endblock %}

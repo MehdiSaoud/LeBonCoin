@@ -17,6 +17,8 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/security-http" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/validator" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/snapappointments/bootstrap-select" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-intl-idn" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

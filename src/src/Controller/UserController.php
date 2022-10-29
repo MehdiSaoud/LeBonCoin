@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UserController extends AbstractController
 {
@@ -21,8 +22,8 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/inscription', name: 'app_user')]
-    public function register(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $managerRegistry, UserRepository $repository): Response
+    #[Route('/inscription', name: 'app_user_register')]
+    public function register(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $managerRegistry, UserRepository $repository, SluggerInterface $slugger): Response
     {
         $data['error']['pseudo'] = '';
         $data['error']['email'] = '';
@@ -48,7 +49,18 @@ class UserController extends AbstractController
                         $user->setAccountCreationDate(new \DateTime());
                         $user->setRoles((array)'ROLE_USER');
                         $user->setPassword($pass_hashed);
-                        $user->setProfilePicture('oui');
+
+                        $photo = $form->get('photos')->getData();
+                        if ($photo) {
+                            $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                            $safeFilename = $slugger->slug($originalFilename);
+                            $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+                            $photo->move($this->getParameter('user_img'), $newFilename);
+                            $user->setProfilePicture($newFilename);
+                        } else {
+                            $user->setProfilePicture('default.jpeg');
+                        }
+
                         $entityManager->persist($user);
                         $entityManager->flush();
 
@@ -56,9 +68,7 @@ class UserController extends AbstractController
                         $firstname = $user->getFirstname();
                         $data = [$lastname, $firstname];
 
-                        return $this->render('user/ok.html.twig', [
-                            'data' => $data
-                        ]);
+                        return $this->redirectToRoute('app_login');
                     } else {
                         $data['error']['pass'] = 'Les mots de passe ne correspondent pas';
                     }

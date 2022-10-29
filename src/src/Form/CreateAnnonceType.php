@@ -7,12 +7,13 @@ use App\Entity\Tag;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateAnnonceType extends AbstractType
@@ -36,7 +37,24 @@ class CreateAnnonceType extends AbstractType
                 'mapped' => false,
                 'choice_label' => 'tag',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+                'required' => false
+            ])
+            ->add('photos', FileType::class, [
+                'label' => 'Ajouter une photo',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1000k',
+                        'mimeTypes' => [
+                            'image/jpg',
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Erreur avec votre image',
+                    ])
+                ]
             ])
             ->add('Submit', SubmitType::class);
     }

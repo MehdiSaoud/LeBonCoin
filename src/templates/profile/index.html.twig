@@ -17,7 +17,7 @@
     <!-- différent bordure dépendant rôle user/admin -->
     <div class='col-4 border border-3 border-{{ color }}'>
     <!-- -->
-      <img src="https://picsum.photos/300/300" alt={{profile.profilePicture}} width="300" height="300">
+      <img src="/uploads/user/{{ profile.profilePicture }}" alt={{profile.profilePicture}} width="300" height="300">
     </div>
     <div class="col-8">
       <div class="row">
@@ -44,12 +44,50 @@
       </div>
     </div>
   </div>
+  <!-- si admin montre les commentaires de la personnes -->
+  {% if "ROLE_ADMIN" in app.user.roles %}
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <!-- controller show comment personne -->
+          {% for  comment in profile.comments %}
+            <li>
+              <a href="{{ path('app_annonce_by_id',{id: comment.idAnnonce.id }) }}">{{profile.pseudo}}</a>
+
+              {{comment.question}}
+              {{comment.creationDate|date('Y-m-d')}}
+               {{comment.id}}
+              <!-- sup comment -->
+              <form action="{{ path('app_comment_delete',{pseudo: profile.pseudo ,id: comment.id }) }}" method="post">
+                <button class="btn btn-lg btn-primary m-auto mb-4" type="submit">
+                  delete
+                </button>
+              </form>
+
+
+            </li>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+
+
   <div class="row">
-    <h1>Last comment<h1>
+    <h1>Annonces<h1>
+    {{ render(controller('App\\Controller\\AnnonceController::getUserAnnonces',
+        {"UserAnnonce":profile.annonces}))}}
   </div>
 </div>
 {% endblock %}
-
 {% block listeArticles %}
 
 
