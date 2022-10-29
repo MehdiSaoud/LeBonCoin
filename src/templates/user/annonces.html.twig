@@ -1,23 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Mes annonces{% endblock %}
 
 {% block body %}
+    <style>
+        .portfolio-item{
+            transition: all 0.3s;
+        }
+        .portfolio-item:hover{
+            transform: scale(1.025);
+        }
+        .portfolio-caption h4{
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .portfolio-caption p{
+            line-height: 20px;
+        }
+
+    </style>
     {% if annonces is empty %}
         <h3>Vous n'avez publié aucune annonce...</h3>
     {% else %}
-        {% for annonce in annonces %}
-            <div>
-                <h3>{{ annonce.title }}</h3>
-                <p>{{ annonce.description }}</p>
-                <p>{{ annonce.price }}€</p>
-                <ul>
-                    {% for tag in annonce.tags %}
-                        <li>{{ tag }}</li>
+    <div class="row mt-5">
+        {% for single in annonces %}
+
+            <div class="col-sm-6 col-md-3 portfolio-item">
+                <div class="border rounded">
+                    <a href="/annonce/{{single.id}}">
+                        <img class="img-fluid" src="/uploads/annonce/{{single.photos}}">
+                    </a>
+
+                    <div class="portfolio-caption text-start">
+                        <h4>{{(single.title)}}</h4>
+                        <p class="text-muted"> A partir de : {{(single.price)}} €</p>
+                        <p class="text-muted">Créée le  : {{(single.dateCreation|date("d/m/Y"))}}</p>
+                    </div>
+
+                </div>
+                <div class="d-flex">
+                    {% for tag in single.tags %}
+                        <h5><span class=" mx-1 badge bg-secondary">{{(tag)}}</span></h5>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
-            <hr style="height: 1px; width: 200px; border: none; background-color: black">
         {% endfor %}
+    </div>
     {% endif %}
 {% endblock %}

@@ -6,6 +6,7 @@
     <style>
         #annonce_section{
             display: flex;
+            margin-top: 50px;
         }
         label{
             margin-bottom: 10px;
@@ -137,10 +138,14 @@
         .seller_infos .profilePicture{
             margin: 5px 0 15px;
         }
+        .annonce_photos{
+            max-height: 500px;
+            max-width: 500px;
+        }
     </style>
     <div id="annonce_page">
     <div id="annonce_section">
-        <img src="/uploads/annonce/{{ annonce.photos }}" alt="{{ annonce.title }}">
+        <img class="annonce_photos" src="/uploads/annonce/{{ annonce.photos }}" alt="{{ annonce.title }}">
         <div class="annonce_infos">
             <h1>{{ annonce.title }}</h1>
             <hr>
