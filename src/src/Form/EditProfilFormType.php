@@ -36,6 +36,10 @@ class EditProfilFormType extends AbstractType
                 'label' => 'Mail',
                 'data' => $data_user['email']
             ])
+            ->add('localisation', TextType::class, [
+                'label' => 'Votre département',
+                'data' => $data_user['localisation']
+            ])
             ->add('photos', FileType::class, [
                 'label' => 'Modifier ma photo de profil',
                 'mapped' => false,

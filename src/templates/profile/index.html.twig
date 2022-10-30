@@ -34,6 +34,9 @@
       <div class="row">
         localisation : {{ localisation }}
       </div>
+      {% if profile.id == user_id %}
+        <a href="{{ path('app_user_edit') }}">Modifier mon profil</a>
+      {% endif %}
       {% if profile.note == null %}
       {% set note = 0 %}
       {% else %}
@@ -49,20 +52,22 @@
   <div class="accordion" id="accordionExample">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne">
           Accordion Item #1
         </button>
       </h2>
-      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+           data-bs-parent="#accordionExample">
         <div class="accordion-body">
           <!-- controller show comment personne -->
           {% for  comment in profile.comments %}
             <li>
-              <a href="{{ path('app_annonce_by_id',{id: comment.idAnnonce.id }) }}">{{profile.pseudo}}</a>
+              <a href="{{ path('app_annonce_by_id',{id: comment.idAnnonce.id }) }}">{{ profile.pseudo }}</a>
 
-              {{comment.question}}
-              {{comment.creationDate|date('Y-m-d')}}
-               {{comment.id}}
+              {{ comment.question }}
+              {{ comment.creationDate|date('Y-m-d') }}
+              {{ comment.id }}
               <!-- sup comment -->
               <form action="{{ path('app_comment_delete',{pseudo: profile.pseudo ,id: comment.id }) }}" method="post">
                 <button class="btn btn-lg btn-primary m-auto mb-4" type="submit">
