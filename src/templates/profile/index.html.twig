@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}{{profile.pseudo}}{% endblock %}
 
 {% block body %}
 
@@ -50,7 +50,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Accordion Item #1
+          Vos commentaires
         </button>
       </h2>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -79,17 +79,5 @@
   </div>
 {% endif %}
 
-
-
-  <div class="row">
-    <h1>Annonces<h1>
-    {{ render(controller('App\\Controller\\AnnonceController::getUserAnnonces',
-        {"UserAnnonce":profile.annonces}))}}
-  </div>
 </div>
-{% endblock %}
-{% block listeArticles %}
-
-
-
 {% endblock %}

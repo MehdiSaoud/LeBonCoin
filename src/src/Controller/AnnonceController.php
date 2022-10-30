@@ -22,11 +22,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AnnonceController extends AbstractController
 {
-    public function getUserAnnonces(Collection $UserAnnonce)
-    {
-        return $this->render('home/home.html.twig', ['annonce' => $UserAnnonce, 'home' => False]);
-    }
-
     #[Route('/annonce/{id}', name: "app_annonce_by_id")]
     public function getAnnonceById($id, AnnonceRepository $annonceRepository, CommentRepository $commentRepository): Response
     {
