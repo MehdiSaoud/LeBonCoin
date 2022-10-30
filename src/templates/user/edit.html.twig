@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Register{% endblock %}
+
+{% block body %}
+    <h1>S'inscrire</h1>
+    {{ form_start(register_form) }}
+    <img src="/uploads/user/{{ profilePicture }}" alt="profilePicture">
+    {{ form_row(register_form.photos) }}
+    {{ form_row(register_form.lastname) }}
+    {{ form_row(register_form.firstname) }}
+    {{ data.error.pseudo }}
+    {{ form_row(register_form.pseudo) }}
+    {{ data.error.email }}
+    {{ form_row(register_form.email) }}
+    {{ form_row(register_form.Submit) }}
+    {{ form_end(register_form) }}
+{% endblock %}

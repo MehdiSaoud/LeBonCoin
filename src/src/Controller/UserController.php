@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EditProfilFormType;
 use App\Form\RegisterFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +32,6 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $pseudo = $form['pseudo']->getData();
@@ -64,10 +64,6 @@ class UserController extends AbstractController
                         $entityManager->persist($user);
                         $entityManager->flush();
 
-                        $lastname = $user->getLastname();
-                        $firstname = $user->getFirstname();
-                        $data = [$lastname, $firstname];
-
                         return $this->redirectToRoute('app_login');
                     } else {
                         $data['error']['pass'] = 'Les mots de passe ne correspondent pas';
@@ -83,6 +79,72 @@ class UserController extends AbstractController
         return $this->render('user/register.html.twig', [
             'register_form' => $form->createView(),
             'data' => $data,
+        ]);
+    }
+
+    #[Route('/modifier-profil', name: 'app_user_edit')]
+    public function editProfil(Request $request, UserRepository $userRepository, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
+    {
+        $user = new User();
+        $user_email = $this->getUser()->getUserIdentifier();
+        $user_data = $userRepository->findBy(["email" => $user_email]);
+        $array_user_data['lastname'] = $user_data[0]->getLastname();
+        $array_user_data['firstname'] = $user_data[0]->getFirstname();
+        $array_user_data['pseudo'] = $user_data[0]->getPseudo();
+        $array_user_data['email'] = $user_data[0]->getEmail();
+
+        $data['error']['pseudo'] = '';
+        $data['error']['email'] = '';
+        $data['error']['pass'] = '';
+
+        $form = $this->createForm(EditProfilFormType::class, $user, [
+            'user_data' => $array_user_data
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pseudo = $form['pseudo']->getData();
+            $count_this_pseudo = $userRepository->countByPseudo($pseudo);
+
+            if ($count_this_pseudo <= 1) {
+                $email = $form['email']->getData();
+                $count_this_mail = $userRepository->countByEmail($email);
+
+                if ($count_this_mail <= 1) {
+                    //$user->setAccountCreationDate(new \DateTime());
+                    //$user->setRoles((array)'ROLE_USER');
+
+                    $photo = $form->get('photos')->getData();
+                    if ($photo) {
+                        $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
+                        $safeFilename = $slugger->slug($originalFilename);
+                        $newFilename = $safeFilename . '-' . uniqid() . '.' . $photo->guessExtension();
+                        $photo->move($this->getParameter('user_img'), $newFilename);
+                        $user->setProfilePicture($newFilename);
+                    } else {
+                        $user->setProfilePicture('default.jpeg');
+                    }
+
+                    $user->setPassword($user_data[0]->getPassword());
+                    $user->setAccountCreationDate($user_data[0]->getAccountCreationDate());
+
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+                    return $this->redirectToRoute('app_default');
+
+                } else {
+                    $data['error']['email'] = 'Cette adresse mail existe déjà';
+                }
+            } else {
+                $data['error']['pseudo'] = 'Ce pseudo existe déjà';
+            }
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'register_form' => $form->createView(),
+            'profilePicture' => $user_data[0]->getProfilePicture(),
+            'data' => $data
         ]);
     }
 }
