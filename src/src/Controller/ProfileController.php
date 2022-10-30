@@ -12,7 +12,7 @@ class ProfileController extends AbstractController
     #[Route('/profile/{pseudo}', name: 'app_profile')]
     public function index($pseudo, UserRepository $userRepo): Response
     {
-        return $this->render('profile/ajout-tag.html.twig', [
+        return $this->render('profile/index.html.twig', [
             'profile' => $userRepo->findOneBy(['pseudo'=>$pseudo]),
         ]);
     }
