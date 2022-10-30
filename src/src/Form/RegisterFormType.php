@@ -31,6 +31,9 @@ class RegisterFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'Mail'
             ])
+            ->add('localisation', TextType::class, [
+                'label' => 'Votre département'
+            ])
             ->add('password', PasswordType::class)
             ->add('password_confirm', PasswordType::class, [
                 'mapped' => false

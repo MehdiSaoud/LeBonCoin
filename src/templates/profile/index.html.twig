@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{profile.pseudo}}{% endblock %}
+{% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
 
@@ -34,6 +34,9 @@
       <div class="row">
         localisation : {{ localisation }}
       </div>
+      {% if profile.id == user_id %}
+        <a href="{{ path('app_user_edit') }}">Modifier mon profil</a>
+      {% endif %}
       {% if profile.note == null %}
       {% set note = 0 %}
       {% else %}

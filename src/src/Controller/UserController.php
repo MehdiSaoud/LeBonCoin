@@ -49,6 +49,7 @@ class UserController extends AbstractController
                         $user->setAccountCreationDate(new \DateTime());
                         $user->setRoles((array)'ROLE_USER');
                         $user->setPassword($pass_hashed);
+                        $user->setLocalisation(($form['localisation']->getData()));
 
                         $photo = $form->get('photos')->getData();
                         if ($photo) {
@@ -92,6 +93,7 @@ class UserController extends AbstractController
         $array_user_data['firstname'] = $user_data[0]->getFirstname();
         $array_user_data['pseudo'] = $user_data[0]->getPseudo();
         $array_user_data['email'] = $user_data[0]->getEmail();
+        $array_user_data['localisation'] = $user_data[0]->getLocalisation();
 
         $data['error']['pseudo'] = '';
         $data['error']['email'] = '';
@@ -111,9 +113,7 @@ class UserController extends AbstractController
                 $count_this_mail = $userRepository->countByEmail($email);
 
                 if ($count_this_mail <= 1) {
-                    //$user->setAccountCreationDate(new \DateTime());
-                    //$user->setRoles((array)'ROLE_USER');
-
+                    $user->setLocalisation($form['localisation']->getData());
                     $photo = $form->get('photos')->getData();
                     if ($photo) {
                         $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
